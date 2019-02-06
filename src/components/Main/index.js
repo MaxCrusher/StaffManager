@@ -15,7 +15,11 @@ class Main extends Component {
   render = () => (
     <div>
       <MainHeader numProfile={this.state.numProfile} />
-      <Table editNumProfile={this.editNumProfile} />
+      <div className="boss-page-main__content">
+        <div className="boss-page-main__inner">
+          <Table editNumProfile={this.editNumProfile} />
+        </div>
+      </div>
     </div>
   );
 }

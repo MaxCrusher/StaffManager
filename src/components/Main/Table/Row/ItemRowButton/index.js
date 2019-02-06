@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import button from './Button';
 
 class ItemRowButton extends Component {
-  render = () => (
-    <div className="boss-table__cell">
-      <div className="boss-table__info">
-        <p className="boss-table__label">{this.props.name}</p>
-        <p className="boss-table__text">{button(this.props.content)}</p>
-      </div>
-    </div>
-  );
+  render = () => {
+    if (this.props.content === 'enable') {
+      return (
+        <p className="boss-table__text">
+          <button className="boss-button boss-button_type_small boss-button_role_enabled boss-button_type_no-behavior">
+            Enabled
+          </button>
+        </p>
+      );
+    }
+    return (
+      <p className="boss-table__text">
+        <button className="boss-button boss-button_type_small boss-button_role_disabled boss-button_type_no-behavior">
+          Disabled
+        </button>
+      </p>
+    );
+  };
 }
 export default ItemRowButton;
 

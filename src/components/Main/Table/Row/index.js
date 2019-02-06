@@ -1,32 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { nameRows } from '../../../selector';
+import ItemRowButton from './ItemRowButton';
 import ItemRow from './ItemRow';
+import ItemRowImage from './ItemRowImage';
 
 class Row extends Component {
-  render = () => {
-    console.log(this.props);
-    // const itemsRow = this.props.nameRow.map(elem => ({ ...elem, content: this.props.profile.filter(prof => prof)}));
-    return (
-      <div className="boss-table__row">
-        <ItemRow name={this.props.nameRow[0].name} content={this.props.profile.id} />
-        <ItemRow name={this.props.nameRow[1].name} content={this.props.profile.name} />
-        <ItemRow name={this.props.nameRow[2].name} content={this.props.profile.modifided} />
-        <ItemRow name={this.props.nameRow[3].name} content={this.props.profile.status} />
-        <ItemRow name={this.props.nameRow[4].name} content={this.props.profile.type} />
-        <ItemRow name={this.props.nameRow[5].name} content={this.props.profile.masterVenue} />
-        <ItemRow name={this.props.nameRow[6].name} content={this.props.profile.workVenue} />
+  render = () => (
+    <div className="boss-table__row">
+      <div className="boss-table__cell">
+        <ItemRowImage />
       </div>
-    );
-  };
+      <div className="boss-table__cell">
+        <div className="boss-table__info">
+          <p className="boss-table__label">Name</p>
+          <ItemRow content={this.props.profile.name} />
+        </div>
+      </div>
+      <div className="boss-table__cell">
+        <div className="boss-table__info">
+          <p className="boss-table__label">Modified</p>
+          <ItemRow content={this.props.profile.modifided} />
+        </div>
+      </div>
+      <div className="boss-table__cell">
+        <div className="boss-table__info">
+          <p className="boss-table__label">Status</p>
+          <ItemRowButton content={this.props.profile.status} />
+        </div>
+      </div>
+      <div className="boss-table__cell">
+        <div className="boss-table__info">
+          <p className="boss-table__label">Type</p>
+          <ItemRow content={this.props.profile.type} />
+        </div>
+      </div>
+      <div className="boss-table__cell">
+        <div className="boss-table__info">
+          <p className="boss-table__label">Master Venue</p>
+          <ItemRow content={this.props.profile.masterVenue} />
+        </div>
+      </div>
+      <div className="boss-table__cell">
+        <div className="boss-table__info">
+          <p className="boss-table__label">Work Venues</p>
+          <ItemRow content={this.props.profile.workVenue} />
+        </div>
+      </div>
+    </div>
+  );
 }
-const mapStateToProps = state => ({
-  nameRow: nameRows(state),
-});
-export default connect(mapStateToProps)(Row);
+export default Row;
 Row.propTypes = {
   profile: PropTypes.object.isRequired,
-  nameRow: PropTypes.array.isRequired,
 };
-// <ItemRow key={elem.id} name={elem.name} id={elem.id} profile={this.props.profile} />

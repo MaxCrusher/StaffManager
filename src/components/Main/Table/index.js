@@ -13,13 +13,9 @@ class Table extends Component {
   render = () => {
     const rows = this.props.profile.map((prof, i) => <Row key={i} id={prof.id} profile={prof} />);
     return (
-      <div className="boss-page-main__content">
-        <div className="boss-page-main__inner">
-          <div className="boss-table boss-table_page_staff-members-index">
-            <MainRow />
-            {rows}
-          </div>
-        </div>
+      <div className="boss-table boss-table_page_staff-members-index">
+        <MainRow />
+        {rows}
       </div>
     );
   };
