@@ -1,8 +1,10 @@
 import * as action from '../action-type';
+import logo from './download.jpeg';
 
 const profiles = [
   {
     id: 0,
+    img: { logo },
     name: 'Max Orlov',
     modifided: '18:00 Wed 11/16/2016',
     status: 'Enable',
@@ -12,6 +14,7 @@ const profiles = [
   },
   {
     id: 1,
+    img: { logo },
     name: 'Brian Smith',
     modifided: '18:00 Wed 11/16/2016',
     status: 'Enable',
@@ -21,6 +24,7 @@ const profiles = [
   },
   {
     id: 2,
+    img: { logo },
     name: 'Jack McDougal',
     modifided: '11:00 Fri 11/18/2016',
     status: 'Disable',
