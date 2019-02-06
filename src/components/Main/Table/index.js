@@ -9,7 +9,6 @@ import { failFetch } from '../../../actions';
 class Table extends Component {
   componentDidMount() {
     this.props.getProfiles();
-    this.props.editNumProfile(this.props.profile.length);
   }
 
   render = () => {
@@ -36,6 +35,5 @@ export default connect(
 
 Table.propTypes = {
   profile: PropTypes.array.isRequired,
-  editNumProfile: PropTypes.func.isRequired,
   getProfiles: PropTypes.func.isRequired,
 };

@@ -13,6 +13,5 @@ class ItemRow extends Component {
 export default ItemRow;
 
 ItemRow.propTypes = {
-  name: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
 };

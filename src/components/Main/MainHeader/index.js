@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { numProfile } from '../../selector';
 
 class MainHeader extends Component {
   render = () => (
@@ -17,7 +19,10 @@ class MainHeader extends Component {
     </div>
   );
 }
-export default MainHeader;
+const mapStateToProps = state => ({
+  numProfile: numProfile(state),
+});
+export default connect(mapStateToProps)(MainHeader);
 MainHeader.propTypes = {
   numProfile: PropTypes.number.isRequired,
 };

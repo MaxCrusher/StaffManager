@@ -1,2 +1,2 @@
 export const allProfile = state => state.reducer.profiles;
-export const nameRows = state => state.reducer.nameRow;
+export const numProfile = state => state.reducer.numProfiles;
