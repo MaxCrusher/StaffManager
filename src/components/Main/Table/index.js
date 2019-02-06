@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 import MainRow from './MainRow';
 import Row from './Row';
 import { allProfile } from '../../selector';
+import { failFetch } from '../../../actions';
 
 class Table extends Component {
   componentDidMount() {
+    this.props.getProfiles();
     this.props.editNumProfile(this.props.profile.length);
   }
 
@@ -24,9 +26,16 @@ class Table extends Component {
 const mapStateToProps = state => ({
   profile: allProfile(state),
 });
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = {
+  getProfiles: failFetch,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Table);
 
 Table.propTypes = {
   profile: PropTypes.array.isRequired,
   editNumProfile: PropTypes.func.isRequired,
+  getProfiles: PropTypes.func.isRequired,
 };
