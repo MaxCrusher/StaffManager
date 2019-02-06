@@ -1,0 +1,2 @@
+export const ALL_PROFILE = 'ALL_PROFILE';
+export const DETAIL_PROFILE = 'DETAIL_PROFILE';
