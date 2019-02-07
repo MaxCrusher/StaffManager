@@ -6,8 +6,8 @@ class Header extends Component {
     <header className="boss-page-header">
       <div className="boss-page-header__inner">
         <div className="boss-page-header__group boss-page-header__group_role_logo">
-          <Link to="/">
-            <a className="boss-page-header__logo">Boss</a>
+          <Link className="boss-page-header__logo" to="/">
+            Boss
           </Link>
         </div>
 
