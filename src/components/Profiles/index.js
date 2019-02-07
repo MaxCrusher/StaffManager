@@ -4,14 +4,14 @@ import Table from './Table';
 
 class Profiles extends Component {
   render = () => (
-    <main className="boss-page-main">
+    <div>
       <ProfilesHeader />
       <div className="boss-page-main__content">
         <div className="boss-page-main__inner">
           <Table editNumProfile={this.editNumProfile} />
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 export default Profiles;

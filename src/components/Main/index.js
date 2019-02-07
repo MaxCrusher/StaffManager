@@ -6,10 +6,7 @@ import DetailProfile from '../DetailProfile';
 class Main extends Component {
   render = () => (
     <Router>
-      <div>
-        <Route exact path="/" component={Profiles} />
-        <Route exact path="/detail/:id" component={DetailProfile} />
-      </div>
+      
     </Router>
   );
 }

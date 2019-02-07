@@ -15,7 +15,7 @@ class DetailProfile extends Component {
   render = () => {
     console.log(this.props);
     return (
-      <main className="boss-page-main">
+      <div>
         <DetailProfileHeader
           id={this.props.detailProfile.id}
           img={this.props.detailProfile.img}
@@ -33,7 +33,7 @@ class DetailProfile extends Component {
           contactDetail={this.props.detailProfile.contactDetail}
           mobileApp={this.props.detailProfile.mobileApp}
         />
-      </main>
+      </div>
     );
   };
 }
