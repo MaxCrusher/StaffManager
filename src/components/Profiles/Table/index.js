@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import MainRow from './MainRow';
 import Row from './Row';
 import { allProfile } from '../../selector';
-import { failFetch } from '../../../actions';
+import { failFetchProfiles } from '../../../actions';
 
 class Table extends Component {
   componentDidMount() {
@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
   profile: allProfile(state),
 });
 const mapDispatchToProps = {
-  getProfiles: failFetch,
+  getProfiles: failFetchProfiles,
 };
 export default connect(
   mapStateToProps,

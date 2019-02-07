@@ -8,7 +8,7 @@ class Row extends Component {
   render = () => (
     <div className="boss-table__row">
       <div className="boss-table__cell">
-        <ItemRowImage content={this.props.profile.img} />
+        <ItemRowImage content={this.props.profile.img.logo} id={this.props.profile.id} />
       </div>
       <div className="boss-table__cell">
         <div className="boss-table__info">

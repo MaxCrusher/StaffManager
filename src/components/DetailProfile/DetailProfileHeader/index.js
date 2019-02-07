@@ -8,7 +8,14 @@ class DetailProfileHeader extends Component {
     <div className="boss-page-main__dashboard">
       <div className="boss-page-main__inner">
         <div className="boss-page-dashboard boss-page-dashboard_updated boss-page-dashboard_page_profile">
-          <MainInformation />
+          <MainInformation
+            img={this.props.img}
+            name={this.props.name}
+            email={this.props.email}
+            phone={this.props.phone}
+            jobType={this.props.jobType}
+            mainVenue={this.props.mainVenue}
+          />
           <MenuButton />
         </div>
       </div>
@@ -16,3 +23,11 @@ class DetailProfileHeader extends Component {
   );
 }
 export default DetailProfileHeader;
+DetailProfileHeader.propTypes = {
+  img: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+  jobType: PropTypes.string.isRequired,
+  mainVenue: PropTypes.string.isRequired,
+};
