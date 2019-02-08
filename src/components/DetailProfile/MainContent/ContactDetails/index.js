@@ -22,12 +22,10 @@ class ContactDetails extends Component {
             <li className="boss-details__item">
               <p className="boss-details__label boss-details__label_size_small">Address</p>
               <p className="boss-details__value">
-                <span className="boss-details__value-line">
-                  {this.props.content.address.numHouse} {this.props.content.address.street}
-                </span>
-                <span className="boss-details__value-line">{this.props.content.address.state}</span>
-                <span className="boss-details__value-line">{this.props.content.address.city}</span>
-                <span className="boss-details__value-line">{this.props.content.address.index}</span>
+                <span className="boss-details__value-line">{this.props.content.address}</span>
+                <span className="boss-details__value-line">{this.props.content.country}</span>
+                <span className="boss-details__value-line">{this.props.content.county}</span>
+                <span className="boss-details__value-line">{this.props.content.postcode}</span>
               </p>
             </li>
           </ul>
@@ -39,4 +37,5 @@ class ContactDetails extends Component {
 export default ContactDetails;
 ContactDetails.propTypes = {
   content: PropTypes.object.isRequired,
+  address: PropTypes.object.isRequired,
 };

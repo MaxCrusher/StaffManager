@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
+import { Spinner } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DetailProfileHeader from './DetailProfileHeader';
 import MainContent from './MainContent';
-import { detailProfile } from '../selector';
+import { getDetailProfile } from '../selector';
 import { failFetchDetailProfile } from '../../actions';
 
 class DetailProfile extends Component {
   componentDidMount() {
-    console.log(this.props.match.params.id);
     this.props.getDetailProfile(this.props.match.params.id);
   }
 
   render = () => {
     console.log(this.props);
+    if (this.props.isLoading) {
+      return <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />;
+    }
     return (
       <main className="boss-page-main">
         <DetailProfileHeader
@@ -38,9 +41,13 @@ class DetailProfile extends Component {
   };
 }
 
-const mapStateToProps = state => ({
-  detailProfile: detailProfile(state),
-});
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    detailProfile: getDetailProfile(state),
+    isLoading: state.appReducer.isLoading,
+  };
+};
 
 const mapDispatchToProps = {
   getDetailProfile: failFetchDetailProfile,
@@ -55,4 +62,5 @@ DetailProfile.propTypes = {
   getDetailProfile: PropTypes.func.isRequired,
   detailProfile: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+const space = '/';
 class EmploymentDetails extends Component {
   render = () => (
     <div className="boss-page-main__isle">
@@ -13,15 +14,15 @@ class EmploymentDetails extends Component {
           <ul className="boss-details__list">
             <li className="boss-details__item">
               <p className="boss-details__label">Main Venue</p>
-              <p className="boss-details__value">{this.props.content.mainVenue}</p>
+              <p className="boss-details__value">{this.props.content.mainVenue.name}</p>
             </li>
             <li className="boss-details__item">
               <p className="boss-details__label">Other Venues</p>
-              <p className="boss-details__value">{this.props.content.otherVenue}</p>
+              <p className="boss-details__value">{this.props.content.otherVenue.map(elem => elem.name + space)}</p>
             </li>
             <li className="boss-details__item">
               <p className="boss-details__label">Job Type</p>
-              <p className="boss-details__value">{this.props.content.jobType}</p>
+              <p className="boss-details__value">{this.props.content.jobType.name}</p>
             </li>
             <li className="boss-details__item">
               <p className="boss-details__label">Start Date</p>
@@ -29,7 +30,7 @@ class EmploymentDetails extends Component {
             </li>
             <li className="boss-details__item">
               <p className="boss-details__label">Pay Rate</p>
-              <p className="boss-details__value">{this.props.content.payRate}</p>
+              <p className="boss-details__value">{this.props.content.payRate.name}</p>
             </li>
             <li className="boss-details__item">
               <p className="boss-details__label">Hour Preference</p>

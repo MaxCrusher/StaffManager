@@ -28,7 +28,7 @@ class MainInformation extends Component {
 }
 export default MainInformation;
 MainInformation.propTypes = {
-  img: PropTypes.object.isRequired,
+  img: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,

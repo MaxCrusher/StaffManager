@@ -13,7 +13,7 @@ class ContentInformation extends Component {
           className="boss-button boss-button_type_small boss-button_type_no-behavior boss-user-summary__label"
           style={{ backgroundColor: '#f0af84' }}
         >
-          {this.props.jobType}
+          {this.props.jobType.name}
         </span>
       </div>
       <div className="boss-user-summary__contacts">
@@ -26,7 +26,7 @@ class ContentInformation extends Component {
       </div>
       <ul className="boss-user-summary__review-list">
         <li className="boss-user-summary__review-item boss-user-summary__review-item_role_venue">
-          <span className="boss-user-summary__review-marked">{this.props.mainVenue}</span>
+          <span className="boss-user-summary__review-marked">{this.props.mainVenue.name}</span>
         </li>
       </ul>
     </div>
