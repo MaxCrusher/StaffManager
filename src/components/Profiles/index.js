@@ -8,7 +8,7 @@ class Profiles extends Component {
       <ProfilesHeader />
       <div className="boss-page-main__content">
         <div className="boss-page-main__inner">
-          <Table editNumProfile={this.editNumProfile} />
+          <Table />
         </div>
       </div>
     </main>
