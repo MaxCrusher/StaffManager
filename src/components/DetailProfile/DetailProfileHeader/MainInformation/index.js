@@ -20,14 +20,15 @@ class MainInformation extends Component {
         </div>
       </div>
       <div className="boss-page-dashboard__buttons-group">
-        <Button type="edit" />
-        <Button type="disable" />
+        <Button type="edit" id={this.props.id} />
+        <Button type="disable" id={this.props.id} />
       </div>
     </div>
   );
 }
 export default MainInformation;
 MainInformation.propTypes = {
+  id: PropTypes.number.isRequired,
   img: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,

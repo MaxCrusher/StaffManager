@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Button extends Component {
   render = () => {
+    console.log(this.props);
     if (this.props.type === 'edit') {
       return (
-        <a href="#" className="boss-button boss-button_role_edit boss-page-dashboard__button">
+        <Link
+          to={'/detail/'.concat(this.props.id, '/edit/employment')}
+          className="boss-button boss-button_role_edit boss-page-dashboard__button"
+        >
           Edit Profile
-        </a>
+        </Link>
       );
     }
     return (
@@ -19,5 +24,6 @@ class Button extends Component {
 }
 export default Button;
 Button.propTypes = {
+  id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
 };

@@ -19,7 +19,11 @@ class DetailProfile extends Component {
   render = () => {
     console.log(this.props);
     if (this.props.isLoading || this.state.initial) {
-      return <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />;
+      return (
+        <div className="centerSpiner">
+          <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />
+        </div>
+      );
     }
     return (
       <main className="boss-page-main">

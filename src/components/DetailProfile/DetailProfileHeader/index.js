@@ -9,6 +9,7 @@ class DetailProfileHeader extends Component {
       <div className="boss-page-main__inner">
         <div className="boss-page-dashboard boss-page-dashboard_updated boss-page-dashboard_page_profile">
           <MainInformation
+            id={this.props.id}
             img={this.props.img}
             name={this.props.name}
             email={this.props.email}
@@ -24,6 +25,7 @@ class DetailProfileHeader extends Component {
 }
 export default DetailProfileHeader;
 DetailProfileHeader.propTypes = {
+  id: PropTypes.number.isRequired,
   img: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,

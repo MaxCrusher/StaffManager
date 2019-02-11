@@ -6,6 +6,7 @@ import MainRow from './MainRow';
 import Row from './Row';
 import { getProfile } from '../../selector';
 import { fetchProfiles } from '../../../actions';
+import '../../../App.css';
 
 class Table extends Component {
   componentDidMount() {
@@ -16,7 +17,11 @@ class Table extends Component {
     console.log(this.props);
     const rows = this.props.profile.map((prof, i) => <Row key={i} id={prof.id} profile={prof} />);
     if (this.props.isLoading) {
-      return <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />;
+      return (
+        <div className="centerSpiner">
+          <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />
+        </div>
+      );
     }
     return (
       <div className="boss-table boss-table_page_staff-members-index">
