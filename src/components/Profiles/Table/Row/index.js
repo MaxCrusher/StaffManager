@@ -53,5 +53,4 @@ class Row extends Component {
 export default Row;
 Row.propTypes = {
   profile: PropTypes.object.isRequired,
-  staffTypes: PropTypes.string.isRequired,
 };

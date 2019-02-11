@@ -28,6 +28,6 @@ DetailProfileHeader.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
-  jobType: PropTypes.string.isRequired,
-  mainVenue: PropTypes.string.isRequired,
+  jobType: PropTypes.object.isRequired,
+  mainVenue: PropTypes.object.isRequired,
 };

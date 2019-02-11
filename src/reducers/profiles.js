@@ -7,7 +7,6 @@ const initialState = {
     venues: [],
   },
   numProfiles: 0,
-  isLoading: false,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -18,10 +17,9 @@ export default (state = initialState, action) => {
         ...state,
         profiles: action.profilesArg,
         numProfiles: action.profilesArg.staffMembers.length,
-        isLoading: false,
       };
     case actions.FAIL_FETCH_RESOLVE_ERROR:
-      return { ...state, profiles: [], numProfiles: 0, isLoading: false, detailProfile: [] };
+      return { ...state, profiles: [], numProfiles: 0, detailProfile: [] };
     default:
       return { ...state };
   }

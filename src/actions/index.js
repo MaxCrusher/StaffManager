@@ -22,10 +22,8 @@ export const failFetchResolveError = error => ({ type: action.FAIL_FETCH_RESOLVE
 
 export const failFetchDetailProfile = id => dispatch => {
   dispatch(failFetchRequest());
-  console.log(id, 'failFDP');
   return getDetailProfile(id)
     .then(detailPro => {
-      console.log(detailPro);
       dispatch(failFetchResolveDetailProfile(detailPro));
       dispatch(failFetchResolve());
     })

@@ -37,5 +37,4 @@ class ContactDetails extends Component {
 export default ContactDetails;
 ContactDetails.propTypes = {
   content: PropTypes.object.isRequired,
-  address: PropTypes.object.isRequired,
 };

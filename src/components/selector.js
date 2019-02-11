@@ -33,6 +33,8 @@ export const getDetailProfile = createSelector(
   getVenuesDP,
   payRates,
   (member, types, venues, rates) => ({
+    id: member.id,
+    img: member.avatarUrl,
     personalDetail: {
       name: member.firstName + space + member.surname,
       gender: member.gender,
