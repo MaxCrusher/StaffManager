@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import Header from './components/Header';
-import Main from './components/Main';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import router from './route';
 import './App.css';
 
 class App extends Component {
-  render = () => (
-    <div className="App">
-      <Header />
-      <Main />
-    </div>
-  );
+  render = () => {
+    console.log('+');
+    const route = router.map((elem, i) => (
+      <Route key={i} path={elem.path} exact={elem.exact} component={elem.component} />
+    ));
+
+    return (
+      <Router>
+        <div className="App">{route}</div>
+      </Router>
+    );
+  };
 }
 
 export default App;

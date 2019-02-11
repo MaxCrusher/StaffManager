@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class ItemRowButton extends Component {
   render = () => {
-    if (this.props.content === 'enable') {
+    if (this.props.content === 'enabled') {
       return (
         <p className="boss-table__text">
           <button className="boss-button boss-button_type_small boss-button_role_enabled boss-button_type_no-behavior">
@@ -24,6 +24,5 @@ class ItemRowButton extends Component {
 export default ItemRowButton;
 
 ItemRowButton.propTypes = {
-  name: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
 };

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { numProfile } from '../../selector';
 
-class MainHeader extends Component {
+class ProfilesHeader extends Component {
   render = () => (
     <div className="boss-page-main__dashboard">
       <div className="boss-page-main__inner">
@@ -17,7 +19,10 @@ class MainHeader extends Component {
     </div>
   );
 }
-export default MainHeader;
-MainHeader.propTypes = {
+const mapStateToProps = state => ({
+  numProfile: numProfile(state),
+});
+export default connect(mapStateToProps)(ProfilesHeader);
+ProfilesHeader.propTypes = {
   numProfile: PropTypes.number.isRequired,
 };
