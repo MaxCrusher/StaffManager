@@ -4,41 +4,43 @@ import { getProfiles, getDetailProfile } from '../servises';
 
 export const detailProfile = idArg => ({ type: action.DETAIL_PROFILE, id: idArg });
 
-export const failFetchRequest = () => ({ type: action.FAIL_FETCH_REQUEST });
+export const fetchRequestProfiles = () => ({ type: action.FETCH_REQUEST_PROFILES, isLoading: true });
 
-export const failFetchResolve = () => ({ type: action.FAIL_FETCH_RESOLVE });
+export const fetchRequestDetailProfile = () => ({ type: action.FETCH_REQUEST_DETAIL_PROFILES, isLoading: true });
 
-export const failFetchResolveProfiles = profilesArg => ({
-  type: action.FAIL_FETCH_RESOLVE_PROFILES,
+export const fetchResolve = () => ({ type: action.FETCH_RESOLVE });
+
+export const fetchResolveProfiles = profilesArg => ({
+  type: action.FETCH_RESOLVE_PROFILES,
+  isLoading: false,
   profilesArg,
 });
 
-export const failFetchResolveDetailProfile = detailProfileArg => ({
-  type: action.FAIL_FETCH_RESOLVE_DETAIL_PROFILE,
+export const fetchResolveDetailProfile = detailProfileArg => ({
+  type: action.FETCH_RESOLVE_DETAIL_PROFILE,
+  isLoading: false,
   detailProfileArg,
 });
 
-export const failFetchResolveError = error => ({ type: action.FAIL_FETCH_RESOLVE_ERROR, error });
+export const fetchResolveError = error => ({ type: action.FETCH_RESOLVE_ERROR, error });
 
-export const failFetchDetailProfile = id => dispatch => {
-  dispatch(failFetchRequest());
+export const fetchDetailProfile = id => dispatch => {
+  dispatch(fetchRequestDetailProfile());
   return getDetailProfile(id)
     .then(detailPro => {
-      dispatch(failFetchResolveDetailProfile(detailPro));
-      dispatch(failFetchResolve());
+      dispatch(fetchResolveDetailProfile(detailPro));
     })
-    .catch(error => dispatch(failFetchResolve(error)));
+    .catch(error => dispatch(fetchResolve(error)));
 };
 
-export const failFetchProfiles = () => dispatch => {
-  dispatch(failFetchRequest());
+export const fetchProfiles = () => dispatch => {
+  dispatch(fetchRequestProfiles());
   return getProfiles
     .then(profilesFail => {
-      dispatch(failFetchResolveProfiles(profilesFail));
-      dispatch(failFetchResolve());
+      dispatch(fetchResolveProfiles(profilesFail));
     })
     .catch(error => {
       console.log(error);
-      dispatch(failFetchResolveError(error));
+      dispatch(fetchResolveError(error));
     });
 };

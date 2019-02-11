@@ -1,7 +1,7 @@
-import * as actions from '../action-type';
+/* import * as actions from '../action-type';
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -12,4 +12,4 @@ export default (state = initialState, action) => {
     default:
       return { ...state };
   }
-};
+}; */

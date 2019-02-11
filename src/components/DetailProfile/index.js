@@ -5,16 +5,20 @@ import { connect } from 'react-redux';
 import DetailProfileHeader from './DetailProfileHeader';
 import MainContent from './MainContent';
 import { getDetailProfile } from '../selector';
-import { failFetchDetailProfile } from '../../actions';
+import { fetchDetailProfile } from '../../actions';
 
 class DetailProfile extends Component {
+  state = {
+    initial: true,
+  };
+
   componentDidMount() {
-    this.props.getDetailProfile(this.props.match.params.id);
+    this.props.getDetailProfile(this.props.match.params.id).then(() => this.setState({ initial: false }));
   }
 
   render = () => {
     console.log(this.props);
-    if (this.props.isLoading) {
+    if (this.props.isLoading || this.state.initial) {
       return <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />;
     }
     return (
@@ -45,12 +49,12 @@ const mapStateToProps = state => {
   console.log(state);
   return {
     detailProfile: getDetailProfile(state),
-    isLoading: state.appReducer.isLoading,
+    isLoading: state.detailProfile.isLoading,
   };
 };
 
 const mapDispatchToProps = {
-  getDetailProfile: failFetchDetailProfile,
+  getDetailProfile: fetchDetailProfile,
 };
 
 export default connect(
