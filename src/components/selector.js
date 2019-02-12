@@ -27,6 +27,17 @@ export const getProfile = createSelector(
     })),
 );
 
+export const personalData = createSelector(
+  getStaffMember,
+  member => ({
+    id: member.id,
+    firstName: member.firstName,
+    surname: member.surname,
+    gender: member.gender,
+    dateOfBirth: member.dateOfBirth,
+  }),
+);
+
 export const getDetailProfile = createSelector(
   getStaffMember,
   getStaffTypesDP,
