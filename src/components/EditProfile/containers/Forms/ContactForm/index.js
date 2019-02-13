@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Form } from 'react-final-form';
 import InputText from './InputText';
+import { contactData } from '../../../../selector';
+import { fetchEditContactData } from '../../../../../actions';
 
 class ContactForm extends Component {
-  onSubmit = () => {
-    console.log('object');
+  onSubmit = async values => {
+    this.props.editContactData(this.props.id, values);
   };
 
   render = () => {
@@ -19,7 +22,12 @@ class ContactForm extends Component {
           <Form
             onSubmit={this.onSubmit}
             initialValues={{
-              address: '',
+              address: this.props.contactData.address,
+              email: this.props.contactData.email,
+              phone: this.props.contactData.phone,
+              postcode: this.props.contactData.postcode,
+              country: this.props.contactData.country,
+              county: this.props.contactData.county,
             }}
             render={({ handleSubmit, pristine, invalid }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
@@ -89,4 +97,21 @@ class ContactForm extends Component {
   };
 }
 
-export default ContactForm;
+const mapStateToProps = state => ({
+  contactData: contactData(state),
+  id: state.detailProfile.staffMember.id,
+});
+
+const mapDispatchToProps = {
+  editContactData: fetchEditContactData,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ContactForm);
+ContactForm.propTypes = {
+  contactData: PropTypes.object.isRequired,
+  editContactData: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+};

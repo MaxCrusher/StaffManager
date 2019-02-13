@@ -19,15 +19,11 @@ class InputText extends Component {
     const mustBeValid = value => {
       if (this.props.name !== 'email') {
         // validation email
-        if (this.props.name !== 'address') {
-          if (
-            (this.props.name === 'postcode' || this.props.name === 'phone') &&
-            regChar.test(value) &&
-            value !== undefined
-          ) {
+        if (this.props.name !== 'address' && this.props.name !== 'phone') {
+          if (this.props.name === 'postcode' && regChar.test(value) && value !== undefined) {
             // validation postcode and phone
             this.setState({ displayNone: false, borderColor: true }, () => 'Required');
-          } else if (this.props.name !== 'postcode' && this.props.name !== 'phone' && regNum.test(value)) {
+          } else if (this.props.name !== 'postcode' && regNum.test(value)) {
             // validation country and county
             this.setState({ displayNone: false, borderColor: true }, () => 'Required');
           } else {

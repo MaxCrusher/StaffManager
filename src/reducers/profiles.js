@@ -7,7 +7,7 @@ const initialState = {
     venues: [],
   },
   numProfiles: 0,
-  isLoading: false,
+  isLoading: true,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -19,6 +19,27 @@ export default (state = initialState, action) => {
         profiles: action.profilesArg,
         numProfiles: action.profilesArg.staffMembers.length,
         isLoading: action.isLoading,
+      };
+    case actions.UPDATE_STAFF_MEMBER_IN_PROFILES:
+      return {
+        ...state,
+        profiles: {
+          ...state.profiles,
+          staffMembers: [
+            ...state.profiles.staffMembers.map(elem => {
+              if (elem.id === action.personalData.id) {
+                return {
+                  ...elem,
+                  firstName: action.personalData.firstName,
+                  surname: action.personalData.surname,
+                  gender: action.personalData.gender,
+                  dateOfBirth: action.personalData.dateOfBirth,
+                };
+              }
+              return elem;
+            }),
+          ],
+        },
       };
     case actions.FETCH_RESOLVE_ERROR:
       return { ...state, profiles: [], numProfiles: 0, detailProfile: [] };

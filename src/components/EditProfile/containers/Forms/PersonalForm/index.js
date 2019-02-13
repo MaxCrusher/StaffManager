@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
+import { fetchEditPersonalData } from '../../../../../actions';
 import { personalData } from '../../../../selector';
 import InputNames from './InputNames';
 
 class PersonalForm extends Component {
-  onSubmit = () => {
-    console.log('object');
+  onSubmit = async values => {
+    this.props.editPersonalData(this.props.id, values);
   };
 
   render = () => {
@@ -29,6 +30,7 @@ class PersonalForm extends Component {
               firstName: this.props.personalData.firstName,
               surname: this.props.personalData.surname,
               select: this.props.personalData.gender,
+              dateOfBirth: '12-12-2000',
             }}
             render={({ handleSubmit, pristine, invalid }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
@@ -91,11 +93,20 @@ class PersonalForm extends Component {
 }
 const mapStateToProps = state => ({
   personalData: personalData(state),
+  id: state.detailProfile.staffMember.id,
 });
+const mapDispatchToProps = {
+  editPersonalData: fetchEditPersonalData,
+};
 
-export default connect(mapStateToProps)(PersonalForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PersonalForm);
 PersonalForm.propTypes = {
   personalData: PropTypes.object.isRequired,
   firstName: PropTypes.string.isRequired,
   surname: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  editPersonalData: PropTypes.func.isRequired,
 };

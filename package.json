@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
     "final-form": "^4.11.1",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
+    "react-addons-update": "^15.6.2",
     "react-dom": "^16.7.0",
     "react-final-form": "^4.0.2",
     "react-redux": "^6.0.0",

@@ -8,16 +8,24 @@ import { getDetailProfile } from '../selector';
 import { fetchDetailProfile } from '../../actions';
 
 class DetailProfile extends Component {
-  state = {
-    initial: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      initial: true,
+    };
+  }
 
   componentDidMount() {
-    this.props.getDetailProfile(this.props.match.params.id).then(() => this.setState({ initial: false }));
+    if (this.props.isLoading) {
+      this.props.getDetailProfile(this.props.match.params.id).then(() => this.setState({ initial: false }));
+    } else if (Number(this.props.match.params.id) !== this.props.id) {
+      this.props.getDetailProfile(this.props.match.params.id).then(() => this.setState({ initial: false }));
+    } else {
+      this.setState({ initial: false });
+    }
   }
 
   render = () => {
-    console.log(this.props);
     if (this.props.isLoading || this.state.initial) {
       return (
         <div className="centerSpiner">
@@ -50,9 +58,9 @@ class DetailProfile extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     detailProfile: getDetailProfile(state),
+    id: state.detailProfile.staffMember.id,
     isLoading: state.detailProfile.isLoading,
   };
 };
@@ -71,4 +79,5 @@ DetailProfile.propTypes = {
   detailProfile: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
 };

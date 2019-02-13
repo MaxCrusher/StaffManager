@@ -7,10 +7,10 @@ export const getStaffTypesP = state => state.profiles.profiles.staffTypes;
 export const getVenuesP = state => state.profiles.profiles.venues;
 export const numProfile = state => state.profiles.numProfiles;
 
-export const getStaffMember = state => state.detailProfile.detailProfile.staffMember;
-export const getStaffTypesDP = state => state.detailProfile.detailProfile.staffTypes;
-export const getVenuesDP = state => state.detailProfile.detailProfile.venues;
-export const payRates = state => state.detailProfile.detailProfile.payRates;
+export const getStaffMember = state => state.detailProfile.staffMember;
+export const getStaffTypesDP = state => state.detailProfile.staffTypes;
+export const getVenuesDP = state => state.detailProfile.venues;
+export const payRates = state => state.detailProfile.payRates;
 
 // export const staffTypes = (id, state) => state.profiles.profiles.staffTypes.filter(elem => elem.id === id)[0].name;
 
@@ -35,6 +35,17 @@ export const personalData = createSelector(
     surname: member.surname,
     gender: member.gender,
     dateOfBirth: member.dateOfBirth,
+  }),
+);
+export const contactData = createSelector(
+  getStaffMember,
+  member => ({
+    email: member.email,
+    phone: member.phoneNumber,
+    address: member.address,
+    country: member.country,
+    county: member.county,
+    postcode: member.postcode,
   }),
 );
 

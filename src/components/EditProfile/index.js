@@ -26,7 +26,7 @@ class EditProfile extends Component {
   };
 }
 const mapStateToProps = state => ({
-  id: state.detailProfile.detailProfile.staffMember.id,
+  id: state.detailProfile.staffMember.id,
 });
 export default connect(mapStateToProps)(EditProfile);
 EditProfile.propTypes = {

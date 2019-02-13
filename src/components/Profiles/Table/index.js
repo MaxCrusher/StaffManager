@@ -10,7 +10,7 @@ import '../../../App.css';
 
 class Table extends Component {
   componentDidMount() {
-    this.props.getProfiles();
+    if (this.props.isLoading) this.props.getProfiles();
   }
 
   render = () => {
