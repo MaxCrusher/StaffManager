@@ -73,11 +73,11 @@ export const employmentData = createSelector(
     payRates: rates.map(rat => ({ ...rat, value: rat.name, label: rat.name })),
     payRate: rates
       .map(rat => ({ ...rat, value: rat.name, label: rat.name, id: rat.id }))
-      .filter(rat => rat.id === member.payRateId),
+      .filter(rat => rat.id === member.payRateId)[0],
     dayPreference: member.dayPreferenceNote,
     hoursPreference: member.hoursPreferenceNote,
     nationalInsuranceNumber: member.nationalInsuranceNumber,
-    sagaId: member.sagaId,
+    sageId: member.sageId,
   }),
 );
 

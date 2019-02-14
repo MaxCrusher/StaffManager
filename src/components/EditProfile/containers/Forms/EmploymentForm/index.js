@@ -55,8 +55,8 @@ class EmploymentForm extends Component {
     });
   };
 
-  defaultValueOther = mas => {
-    mas.map(elem => elem.value);
+  handleChangeOtherVenues = selectedOptionOtherVenue => {
+    this.setState({ selectedOptionOtherVenue });
   };
 
   IndicatorSeparator = ({ innerProps }) => <span style={indicatorSeparatorStyle} {...innerProps} />;
@@ -94,7 +94,7 @@ class EmploymentForm extends Component {
               dayPreferenceNote: this.props.employmentData.dayPreference,
               hoursPreferenceNote: this.props.employmentData.hoursPreference,
               nationalInsuranceNumber: this.props.employmentData.nationalInsuranceNumber,
-              sageId: this.props.employmentData.sagaId,
+              sageId: this.props.employmentData.sageId,
             }}
             render={({ handleSubmit, pristine, invalid }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
@@ -134,6 +134,7 @@ class EmploymentForm extends Component {
                         <Select
                           name={name}
                           defaultValue={this.state.selectedOptionOtherVenue}
+                          onChange={this.handleChangeOtherVenues}
                           components={this.IndicatorSeparator}
                           options={this.props.employmentData.venuesMas}
                           isMulti
