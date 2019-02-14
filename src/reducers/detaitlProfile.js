@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
         staffTypes: action.detailProfileArg.staffTypes,
         venues: action.detailProfileArg.venues,
         payRates: action.detailProfileArg.payRates,
-        genderValues: action.detailProfileArg.genderValue,
+        genderValues: action.detailProfileArg.genderValues,
         isLoading: action.isLoading,
       };
     case actions.FETCH_RESOLVE_EDIT_CONTACT_DATA:

@@ -1,17 +1,68 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import DatePicker from 'react-datepicker';
+import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import { fetchEditPersonalData } from '../../../../../actions';
 import { personalData } from '../../../../selector';
 import InputNames from './InputNames';
+import 'react-datepicker/dist/react-datepicker.css';
+import './index.css';
 
+const options = [{ value: 'male', label: 'male' }, { value: 'female', label: 'female' }];
 class PersonalForm extends Component {
+  state = {
+    startDate: new Date(this.props.personalData.dateOfBirth),
+    isOpen: false,
+    selectedOption: this.props.personalData.gender === 'male'
+        ? { value: 'male', label: 'male' }
+        : { value: 'female', label: 'female' },
+  };
+
   onSubmit = async values => {
     this.props.editPersonalData(this.props.id, values);
   };
 
+  handleChangeGender = selectedOption => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
+  };
+
+  handleChange = date => {
+    this.setState({
+      startDate: date,
+    });
+  };
+
+  toggleCalendar = e => {
+    e && e.preventDefault();
+    this.setState({ isOpen: !this.state.isOpen });
+  };
+
   render = () => {
+    const inputStyles = {
+      control: styles => ({ ...styles, height: '50px', borderRadius: '2px', borderColor: '#d8d8d8' }),
+      placeholder: styles => ({
+        ...styles,
+        lineHeight: '48px',
+        color: '#aaa',
+        height: '50px',
+      }),
+      input: styles => ({
+        ...styles,
+        lineHeight: '48px',
+        paddingLeft: '20px',
+        paddingRight: '10px',
+        color: '#aaa',
+        height: '50px',
+      }),
+      singleValue: styles => ({
+        ...styles,
+        display: 'initial',
+      }),
+    };
+    console.log(this.state.startDate, this.props.personalData.dateOfBirth);
     const subGender = () => {
       if (this.props.personalData.gender === 'female') {
         return 'male';
@@ -54,12 +105,19 @@ class PersonalForm extends Component {
                   <label htmlFor="select-gender" className="boss-form__label">
                     <span className="boss-form__label-text">Gender*</span>
                     <div className="boss-form__select">
-                      <div className="Select-control">
-                        <Field name="select" component="select">
-                          <option className="Select-option is-focused">{this.props.personalData.gender}</option>
-                          <option className="Select-option">{subGender()}</option>
-                        </Field>
-                      </div>
+                      <Field
+                        component={() => (
+                          <Select
+                            value={this.state.selectedOption}
+                            onChange={this.handleChangeGender}
+                            options={options}
+                            styles={inputStyles}
+                          />
+                        )}
+                        value={this.state.selectedOption.value}
+                        required=""
+                        name="select"
+                      />
                     </div>
                   </label>
                 </div>
@@ -68,10 +126,8 @@ class PersonalForm extends Component {
                     <span className="boss-form__label-text">Date of birth*</span>
                   </p>
 
-                  <div className="date-picker-input date-picker-input_type_icon">
-                    <div className="react-datepicker__input-container react-datepicker__tether-target react-datepicker__tether-element-attached-bottom react-datepicker__tether-element-attached-left react-datepicker__tether-target-attached-top react-datepicker__tether-target-attached-left react-datepicker__tether-enabled">
-                      <div className="date-picker-input-field" />
-                    </div>
+                  <div className="date-picker-input" onClick={this.toggleCalendar}>
+                    <DatePicker dateFormat="dd/MM/yyyy" selected={this.state.startDate} onChange={this.handleChange} />
                   </div>
                 </div>
                 <div className="boss-form__field boss-form__field_justify_end">

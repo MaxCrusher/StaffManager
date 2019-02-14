@@ -48,6 +48,38 @@ export const contactData = createSelector(
     postcode: member.postcode,
   }),
 );
+const reg = /\d[/]\d[/]\d /g;
+export const employmentData = createSelector(
+  getStaffMember,
+  getStaffTypesDP,
+  getVenuesDP,
+  payRates,
+  (member, types, venues, rates) => ({
+    mainVenue: venues
+      .map(elem => ({ ...elem, value: elem.name, label: elem.name, id: elem.id }))
+      .filter(elem => elem.id === member.masterVenueId)[0],
+    otherVenue: member.otherVenueIds.map(
+      othVenId =>
+        venues
+          .map(elem => ({ ...elem, value: elem.name, label: elem.name, id: elem.id }))
+          .filter(elem => elem.id === othVenId)[0],
+    ),
+    venuesMas: venues.map(elem => ({ ...elem, value: elem.name, label: elem.name, id: elem.id })),
+    staffTypes: types.map(elem => ({ ...elem, value: elem.name, label: elem.name, id: elem.id })),
+    staffType: types
+      .map(elem => ({ ...elem, value: elem.name, label: elem.name }))
+      .filter(elem => elem.id === member.staffTypeId)[0],
+    startsAt: member.startsAt.match(/\d+/g).reverse(),
+    payRates: rates.map(rat => ({ ...rat, value: rat.name, label: rat.name })),
+    payRate: rates
+      .map(rat => ({ ...rat, value: rat.name, label: rat.name, id: rat.id }))
+      .filter(rat => rat.id === member.payRateId),
+    dayPreference: member.dayPreferenceNote,
+    hoursPreference: member.hoursPreferenceNote,
+    nationalInsuranceNumber: member.nationalInsuranceNumber,
+    sagaId: member.sagaId,
+  }),
+);
 
 export const getDetailProfile = createSelector(
   getStaffMember,
@@ -85,7 +117,6 @@ export const getDetailProfile = createSelector(
       hourPreference: member.hoursPreferenceNote,
       dayPreference: member.dayPreferenceNote,
       nationalInsuranceNumber: member.nationalInsuranceNumber,
-      sageId: member.sageId,
     },
     mobileApp: {},
   }),

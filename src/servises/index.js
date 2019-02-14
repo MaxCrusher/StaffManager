@@ -50,3 +50,31 @@ export const postContactInfo = (id, data) =>
     )
     .then(response => response.data)
     .catch(error => console.log(error));
+
+/* export const postEmploymentInfo = (id, data) =>
+  axios
+    .post(
+      'https://purrweb-internship.herokuapp.com/api/v1/staff_members/'.concat(id, '/update_employment_details'),
+      JSON.stringify({
+        *nationalInsuranceNumber: ,
+        *sageId: ,
+        *hoursPreferenceNote: ,
+        *dayPreferenceNote: ,
+        *startsAt: ,
+        *?employmentStatus: ,
+        *payRateId: ,
+        *masterVenue: ,
+        *otherVenues: ,
+        *staffType: ,
+        siaBadgeNumber: ,
+        siaBadgeExpiryDate: ,
+      }),
+      {
+        headers: {
+          Authorization: 'Token token=f4d91314f64309521727d059b271fe9b',
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      },
+    )
+    .then(response => response.data)
+    .catch(error => console.log(error)); */

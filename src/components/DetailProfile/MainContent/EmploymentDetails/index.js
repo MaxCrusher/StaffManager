@@ -46,7 +46,7 @@ class EmploymentDetails extends Component {
             </li>
             <li className="boss-details__item">
               <p className="boss-details__label">Sage ID</p>
-              <p className="boss-details__value">{this.props.id}</p>
+              <p className="boss-details__value">{this.props.content.cageId}</p>
             </li>
             <li className="boss-details__item">
               <p className="boss-details__label">Status Statement</p>
