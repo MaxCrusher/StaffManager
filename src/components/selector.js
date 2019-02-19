@@ -77,6 +77,7 @@ export const employmentData = createSelector(
     dayPreference: member.dayPreferenceNote,
     hoursPreference: member.hoursPreferenceNote,
     nationalInsuranceNumber: member.nationalInsuranceNumber,
+    employmentStatus: member.statusStatement,
     sageId: member.sageId,
   }),
 );
@@ -96,7 +97,7 @@ export const getDetailProfile = createSelector(
     },
     accountDetail: {
       created: member.createdAt,
-      status: member.statusStatement,
+      status: member.isDisabled,
       user: member.hasUser,
       applicationPassword: member.passwordSetAt,
     },
@@ -117,6 +118,8 @@ export const getDetailProfile = createSelector(
       hourPreference: member.hoursPreferenceNote,
       dayPreference: member.dayPreferenceNote,
       nationalInsuranceNumber: member.nationalInsuranceNumber,
+      sageId: member.sageId,
+      statusStatement: member.statusStatement,
     },
     mobileApp: {},
   }),

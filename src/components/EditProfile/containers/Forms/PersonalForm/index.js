@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
-import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import { fetchEditPersonalData } from '../../../../../actions';
 import { personalData } from '../../../../selector';
+import { inputStyles } from '../style';
 import InputNames from './InputNames';
+import MySelect from './MySelect';
 import 'react-datepicker/dist/react-datepicker.css';
 import './index.css';
 
@@ -15,18 +16,11 @@ class PersonalForm extends Component {
   state = {
     startDate: new Date(this.props.personalData.dateOfBirth),
     isOpen: false,
-    selectedOption: this.props.personalData.gender === 'male'
-        ? { value: 'male', label: 'male' }
-        : { value: 'female', label: 'female' },
   };
 
-  onSubmit = async values => {
+  onSubmit = values => {
+    console.log(values);
     this.props.editPersonalData(this.props.id, values);
-  };
-
-  handleChangeGender = selectedOption => {
-    this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
   };
 
   handleChange = date => {
@@ -41,34 +35,15 @@ class PersonalForm extends Component {
   };
 
   render = () => {
-    const inputStyles = {
-      control: styles => ({ ...styles, height: '50px', borderRadius: '2px', borderColor: '#d8d8d8' }),
-      placeholder: styles => ({
-        ...styles,
-        lineHeight: '48px',
-        color: '#aaa',
-        height: '50px',
-      }),
-      input: styles => ({
-        ...styles,
-        lineHeight: '48px',
-        paddingLeft: '20px',
-        paddingRight: '10px',
-        color: '#aaa',
-        height: '50px',
-      }),
-      singleValue: styles => ({
-        ...styles,
-        display: 'initial',
-      }),
-    };
-    console.log(this.state.startDate, this.props.personalData.dateOfBirth);
-    const subGender = () => {
-      if (this.props.personalData.gender === 'female') {
-        return 'male';
-      }
-      return 'female';
-    };
+    const regNum = RegExp(/\d/);
+
+    const mustBeString = value => !!regNum.test(value);
+
+    const required = value => !value;
+
+    const composeValidators = (...validators) => value =>
+      validators.reduce((error, validator) => error || validator(value), undefined);
+
     return (
       <article className="boss-content-switcher__chapter" data-chapter="personal">
         <header className="boss-content-switcher__header">
@@ -80,47 +55,27 @@ class PersonalForm extends Component {
             initialValues={{
               firstName: this.props.personalData.firstName,
               surname: this.props.personalData.surname,
-              select: this.props.personalData.gender,
+              gender: this.props.personalData.gender === 'male' ? options[0] : options[1],
               dateOfBirth: '12-12-2000',
             }}
             render={({ handleSubmit, pristine, invalid }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
-                <InputNames
-                  label="First Name*"
+                <Field
+                  component={InputNames}
                   name="firstName"
-                  type="text"
-                  classname="boss-form__input"
-                  required=""
-                  component="input"
+                  className="boss-form__input"
+                  label="First name*"
+                  validate={composeValidators(required, mustBeString)}
                 />
-                <InputNames
+                <Field
+                  component={InputNames}
                   label="Surname*"
+                  className="boss-form__input"
                   name="surname"
-                  type="text"
-                  classname="boss-form__input"
-                  required=""
-                  component="input"
+                  validate={composeValidators(required, mustBeString)}
                 />
-                <div className="boss-form__field">
-                  <label htmlFor="select-gender" className="boss-form__label">
-                    <span className="boss-form__label-text">Gender*</span>
-                    <div className="boss-form__select">
-                      <Field
-                        component={() => (
-                          <Select
-                            value={this.state.selectedOption}
-                            onChange={this.handleChangeGender}
-                            options={options}
-                            styles={inputStyles}
-                          />
-                        )}
-                        value={this.state.selectedOption.value}
-                        required=""
-                        name="select"
-                      />
-                    </div>
-                  </label>
-                </div>
+                <Field label="Gender*" component={MySelect} options={options} name="gender" />
+
                 <div className="boss-form__field">
                   <p className="boss-form__label">
                     <span className="boss-form__label-text">Date of birth*</span>

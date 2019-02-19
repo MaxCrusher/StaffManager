@@ -10,7 +10,9 @@ import '../../../App.css';
 
 class Table extends Component {
   componentDidMount() {
-    if (this.props.isLoading) this.props.getProfiles();
+    if (this.props.isLoading && this.props.url === '/') {
+      this.props.getProfiles();
+    }
   }
 
   render = () => {
@@ -48,4 +50,5 @@ Table.propTypes = {
   profile: PropTypes.array.isRequired,
   getProfiles: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  url: PropTypes.string.isRequired,
 };

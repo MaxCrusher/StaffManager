@@ -1,11 +1,14 @@
 import axios from 'axios';
 
-export const getProfiles = fetch('https://purrweb-internship.herokuapp.com/api/v1/staff_members', {
-  headers: { Authorization: 'Token token=f4d91314f64309521727d059b271fe9b' },
-}).then(response => response.json());
+export const getProfiles = () =>
+  fetch('https://purrweb-internship.herokuapp.com/api/v1/staff_members', {
+    type: 'GET',
+    headers: { Authorization: 'Token token=f4d91314f64309521727d059b271fe9b' },
+  }).then(response => response.json());
 
 export const getDetailProfile = id =>
   fetch('https://purrweb-internship.herokuapp.com/api/v1/staff_members/'.concat(id), {
+    type: 'GET',
     headers: { Authorization: 'Token token=f4d91314f64309521727d059b271fe9b' },
   }).then(response => response.json());
 
@@ -16,7 +19,7 @@ export const postPersonalInfo = (id, data) =>
       JSON.stringify({
         firstName: data.firstName,
         surname: data.surname,
-        gender: data.select,
+        gender: data.gender.value,
         dateOfBirth: '12-12-1912',
       }),
       {
@@ -27,7 +30,7 @@ export const postPersonalInfo = (id, data) =>
       },
     )
     .then(response => response.data)
-    .catch(error => console.log(error));
+    .catch(error => error.response.data);
 
 export const postContactInfo = (id, data) =>
   axios
@@ -51,23 +54,21 @@ export const postContactInfo = (id, data) =>
     .then(response => response.data)
     .catch(error => console.log(error));
 
-/* export const postEmploymentInfo = (id, data) =>
-  axios
+export const postEmploymentInfo = (id, data) => {
+  return axios
     .post(
       'https://purrweb-internship.herokuapp.com/api/v1/staff_members/'.concat(id, '/update_employment_details'),
       JSON.stringify({
-        *nationalInsuranceNumber: ,
-        *sageId: ,
-        *hoursPreferenceNote: ,
-        *dayPreferenceNote: ,
-        *startsAt: ,
-        *?employmentStatus: ,
-        *payRateId: ,
-        *masterVenue: ,
-        *otherVenues: ,
-        *staffType: ,
-        siaBadgeNumber: ,
-        siaBadgeExpiryDate: ,
+        nationalInsuranceNumber: data.nationalInsuranceNumber ? data.nationalInsuranceNumber : null,
+        sageId: data.sageId ? data.sageId : null,
+        hoursPreferenceNote: data.hoursPreferenceNote,
+        dayPreferenceNote: data.dayPreferenceNote,
+        startsAt: data.startsAt,
+        employmentStatus: data.employmentStatus,
+        payRateId: data.payRate.id,
+        masterVenue: data.masterVenue.id,
+        otherVenues: data.otherVenues.map(elem => elem.id),
+        staffType: data.staffType.id,
       }),
       {
         headers: {
@@ -77,4 +78,5 @@ export const postContactInfo = (id, data) =>
       },
     )
     .then(response => response.data)
-    .catch(error => console.log(error)); */
+    .catch(error => console.log(error));
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Form } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import InputText from './InputText';
 import { contactData } from '../../../../selector';
 import { fetchEditContactData } from '../../../../../actions';
@@ -12,7 +12,15 @@ class ContactForm extends Component {
   };
 
   render = () => {
-    console.log('object');
+    const regNum = RegExp(/\d/);
+    const regChar = RegExp(/\D/);
+    const regEmail = RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
+    const validEmail = value => !regEmail.test(value);
+    const validString = value => !!regNum.test(value);
+    const validNumber = value => !!regChar.test(value);
+    const composeValidators = (...validators) => value =>
+      validators.reduce((error, validator) => error || validator(value), undefined);
+
     return (
       <article className="boss-content-switcher__chapter" data-chapter="contact">
         <header className="boss-content-switcher__header">
@@ -31,53 +39,35 @@ class ContactForm extends Component {
             }}
             render={({ handleSubmit, pristine, invalid }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
-                <InputText
+                <Field
+                  validate={composeValidators(validEmail)}
                   label="Email"
                   name="email"
-                  type="text"
-                  classname="boss-form__input"
-                  component="input"
-                  required=""
+                  className="boss-form__input"
+                  component={InputText}
                 />
-                <InputText
-                  label="Phone number"
-                  name="phone"
-                  type="text"
-                  classname="boss-form__input"
-                  component="input"
-                  required=""
-                />
-                <InputText
-                  label="Address"
-                  name="address"
-                  type="text"
-                  classname="boss-form__input"
-                  component="input"
-                  required=""
-                />
-                <InputText
+                <Field label="Phone number" name="phone" className="boss-form__input" component={InputText} />
+                <Field label="Address" name="address" className="boss-form__input" component={InputText} />
+                <Field
+                  validate={composeValidators(validNumber)}
                   label="Postcode"
                   name="postcode"
-                  type="text"
-                  classname="boss-form__input"
-                  component="input"
-                  required=""
+                  className="boss-form__input"
+                  component={InputText}
                 />
-                <InputText
+                <Field
+                  validate={composeValidators(validString)}
                   label="Country"
                   name="country"
-                  type="text"
-                  classname="boss-form__input"
-                  component="input"
-                  required=""
+                  className="boss-form__input"
+                  component={InputText}
                 />
-                <InputText
+                <Field
+                  validate={composeValidators(validString)}
                   label="County"
                   name="county"
-                  type="text"
-                  classname="boss-form__input"
-                  component="input"
-                  required=""
+                  className="boss-form__input"
+                  component={InputText}
                 />
                 <div className="boss-form__field boss-form__field_justify_end">
                   <button

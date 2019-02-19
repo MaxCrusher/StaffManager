@@ -17,7 +17,7 @@ class AccountDetails extends Component {
             </li>
             <li className="boss-details__item">
               <p className="boss-details__label boss-details__label_size_small">Status</p>
-              <p className="boss-details__value">{this.props.content.status}</p>
+              <p className="boss-details__value">{this.props.content.status ? 'Disable' : 'Enable'}</p>
             </li>
             <li className="boss-details__item">
               <p className="boss-details__label boss-details__label_size_small">User</p>

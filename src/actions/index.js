@@ -1,6 +1,6 @@
 import * as action from '../action-type';
 
-import { getProfiles, getDetailProfile, postPersonalInfo, postContactInfo } from '../servises';
+import { getProfiles, getDetailProfile, postPersonalInfo, postContactInfo, postEmploymentInfo } from '../servises';
 
 export const detailProfile = idArg => ({ type: action.DETAIL_PROFILE, id: idArg });
 
@@ -11,6 +11,11 @@ export const fetchRequestEditPersonalData = () => ({
 
 export const fetchRequestEditContactData = () => ({
   type: action.FETCH_REQUEST_EDIT_CONTACT_DATA,
+  isLoading: true,
+});
+
+export const fetchRequestEditEmploymentData = () => ({
+  type: action.FETCH_REQUEST_EDIT_EMPLOYMENT_DATA,
   isLoading: true,
 });
 
@@ -44,6 +49,12 @@ export const fetchResolveEditContactData = contactData => ({
   contactData,
 });
 
+export const fetchResolveEditEmploymentData = employmentData => ({
+  type: action.FETCH_RESOLVE_EDIT_EMPLOYMENT_DATA,
+  isLoading: false,
+  employmentData,
+});
+
 export const updateStaffMemberInProfiles = personalData => ({
   type: action.UPDATE_STAFF_MEMBER_IN_PROFILES,
   personalData,
@@ -61,8 +72,9 @@ export const fetchDetailProfile = id => dispatch => {
 };
 
 export const fetchProfiles = () => dispatch => {
+  console.log('taaak');
   dispatch(fetchRequestProfiles());
-  return getProfiles
+  return getProfiles()
     .then(profilesFail => {
       dispatch(fetchResolveProfiles(profilesFail));
     })
@@ -77,9 +89,12 @@ export const fetchEditPersonalData = (id, data) => dispatch => {
   console.log(id, data);
   return postPersonalInfo(id, data)
     .then(newPersonalData => {
-      console.log(newPersonalData);
-      dispatch(fetchResolveEditPersonalData(newPersonalData));
-      dispatch(updateStaffMemberInProfiles(newPersonalData));
+      if (newPersonalData.errors === undefined) {
+        dispatch(fetchResolveEditPersonalData(newPersonalData));
+        dispatch(updateStaffMemberInProfiles(newPersonalData));
+      } else {
+        dispatch(fetchResolve(newPersonalData));
+      }
     })
     .catch(error => dispatch(fetchResolve(error)));
 };
@@ -91,6 +106,17 @@ export const fetchEditContactData = (id, data) => dispatch => {
     .then(newContactData => {
       console.log(newContactData);
       dispatch(fetchResolveEditPersonalData(newContactData));
+    })
+    .catch(error => dispatch(fetchResolve(error)));
+};
+
+export const fetchEditEmploymentData = (id, data) => dispatch => {
+  dispatch(fetchRequestEditEmploymentData());
+  console.log(id, data);
+  return postEmploymentInfo(id, data)
+    .then(newEmploymentData => {
+      console.log(newEmploymentData);
+      dispatch(fetchResolveEditEmploymentData(newEmploymentData));
     })
     .catch(error => dispatch(fetchResolve(error)));
 };

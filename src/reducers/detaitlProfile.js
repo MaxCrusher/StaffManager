@@ -36,8 +36,26 @@ export default (state = initialState, action) => {
           email: action.contactData.emailAddress,
         },
       };
-    case actions.FETCH_REQUEST_EDIT_PERSONAL_DATA:
-      return { ...state, isLoading: action.isLoading };
+    case actions.FETCH_RESOLVE_EDIT_EMPLOYMENT_DATA: {
+      console.log(action);
+      return {
+        ...state,
+        staffMember: {
+          ...state.staffMember,
+          mainVenueId: action.employmentData.masterVenueId,
+          otherVenueIds: action.employmentData.otherVenueIds,
+          staffTypeId: action.employmentData.staffTypeId,
+          startsAt: action.employmentData.startsAt,
+          payRateId: action.employmentData.payRateId,
+          dayPreferenceNote: action.employmentData.dayPreferenceNote,
+          hoursPreferenceNote: action.employmentData.hoursPreferenceNote,
+          nationalInsuranceNumber: action.employmentData.nationalInsuranceNumber,
+          sageId: action.employmentData.sageId,
+          statusStatement: action.employmentData.statusStatement,
+        },
+        isLoading: action.isLoading,
+      };
+    }
     case actions.FETCH_RESOLVE_EDIT_PERSONAL_DATA: {
       console.log(action.personalData);
       return { ...state, staffMember: action.personalData, isLoading: action.isLoading };
