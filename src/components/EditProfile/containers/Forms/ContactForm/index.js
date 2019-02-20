@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Spinner } from 'reactstrap';
 import { Form, Field } from 'react-final-form';
 import InputText from './InputText';
 import { contactData } from '../../../../selector';
@@ -8,10 +9,21 @@ import { fetchEditContactData } from '../../../../../actions';
 
 class ContactForm extends Component {
   onSubmit = async values => {
-    this.props.editContactData(this.props.id, values);
+    let error;
+    await this.props
+      .editContactData(this.props.id, values)
+      .then(response => {
+        console.log('+');
+      })
+      .catch(res => {
+        error = res.errors;
+      });
+    console.log(error);
+    return error;
   };
 
   render = () => {
+    let spinner = null;
     const regNum = RegExp(/\d/);
     const regChar = RegExp(/\D/);
     const regEmail = RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
@@ -20,7 +32,17 @@ class ContactForm extends Component {
     const validNumber = value => !!regChar.test(value);
     const composeValidators = (...validators) => value =>
       validators.reduce((error, validator) => error || validator(value), undefined);
-
+    if (this.props.isLoadingForm) {
+      spinner = (
+        <div className="shadowLoading">
+          <div className="centerSpiner">
+            <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />
+          </div>
+        </div>
+      );
+    } else {
+      spinner = null;
+    }
     return (
       <article className="boss-content-switcher__chapter" data-chapter="contact">
         <header className="boss-content-switcher__header">
@@ -37,7 +59,7 @@ class ContactForm extends Component {
               country: this.props.contactData.country,
               county: this.props.contactData.county,
             }}
-            render={({ handleSubmit, pristine, invalid }) => (
+            render={({ handleSubmit, pristine, submitErrors }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
                 <Field
                   validate={composeValidators(validEmail)}
@@ -73,7 +95,7 @@ class ContactForm extends Component {
                   <button
                     className="boss-button boss-form__submit boss-form__submit_adjust_single"
                     type="submit"
-                    disabled={pristine || invalid}
+                    disabled={pristine}
                   >
                     Save
                   </button>
@@ -81,6 +103,7 @@ class ContactForm extends Component {
               </form>
             )}
           />
+          {spinner}
         </div>
       </article>
     );
@@ -90,6 +113,7 @@ class ContactForm extends Component {
 const mapStateToProps = state => ({
   contactData: contactData(state),
   id: state.detailProfile.staffMember.id,
+  isLoadingForm: state.detailProfile.isLoadingForm,
 });
 
 const mapDispatchToProps = {
@@ -104,4 +128,5 @@ ContactForm.propTypes = {
   contactData: PropTypes.object.isRequired,
   editContactData: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
+  isLoadingForm: PropTypes.bool,
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
+import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import { fetchEditPersonalData } from '../../../../../actions';
@@ -18,9 +19,18 @@ class PersonalForm extends Component {
     isOpen: false,
   };
 
-  onSubmit = values => {
-    console.log(values);
-    this.props.editPersonalData(this.props.id, values);
+  onSubmit = async values => {
+    let error;
+    await this.props
+      .editPersonalData(this.props.id, values)
+      .then(response => {
+        console.log('+');
+      })
+      .catch(res => {
+        error = res.errors;
+      });
+    console.log(error);
+    return error;
   };
 
   handleChange = date => {
@@ -35,6 +45,7 @@ class PersonalForm extends Component {
   };
 
   render = () => {
+    let spinner = null;
     const regNum = RegExp(/\d/);
 
     const mustBeString = value => !!regNum.test(value);
@@ -43,6 +54,18 @@ class PersonalForm extends Component {
 
     const composeValidators = (...validators) => value =>
       validators.reduce((error, validator) => error || validator(value), undefined);
+
+    if (this.props.isLoadingForm) {
+      spinner = (
+        <div className="shadowLoading">
+          <div className="centerSpiner">
+            <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />
+          </div>
+        </div>
+      );
+    } else {
+      spinner = null;
+    }
 
     return (
       <article className="boss-content-switcher__chapter" data-chapter="personal">
@@ -58,7 +81,7 @@ class PersonalForm extends Component {
               gender: this.props.personalData.gender === 'male' ? options[0] : options[1],
               dateOfBirth: '12-12-2000',
             }}
-            render={({ handleSubmit, pristine, invalid }) => (
+            render={({ handleSubmit, pristine, submitErrors }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
                 <Field
                   component={InputNames}
@@ -89,7 +112,7 @@ class PersonalForm extends Component {
                   <button
                     className="boss-button boss-form__submit boss-form__submit_adjust_single"
                     type="submit"
-                    disabled={pristine || invalid}
+                    disabled={pristine}
                   >
                     Save
                   </button>
@@ -97,6 +120,7 @@ class PersonalForm extends Component {
               </form>
             )}
           />
+          {spinner}
         </div>
       </article>
     );
@@ -105,6 +129,8 @@ class PersonalForm extends Component {
 const mapStateToProps = state => ({
   personalData: personalData(state),
   id: state.detailProfile.staffMember.id,
+  errors: state.errors,
+  isLoadingForm: state.detailProfile.isLoadingForm,
 });
 const mapDispatchToProps = {
   editPersonalData: fetchEditPersonalData,
@@ -120,4 +146,6 @@ PersonalForm.propTypes = {
   surname: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   editPersonalData: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  isLoadingForm: PropTypes.bool.isRequired,
 };

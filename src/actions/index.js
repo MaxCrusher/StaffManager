@@ -25,6 +25,15 @@ export const fetchRequestDetailProfile = () => ({ type: action.FETCH_REQUEST_DET
 
 export const fetchResolve = () => ({ type: action.FETCH_RESOLVE });
 
+export const fetchResolveError = error => ({
+  type: action.FETCH_RESOLVE_ERROR,
+  error,
+  isLoading: false,
+  isLoadingForm: false,
+});
+
+export const fetchResolveErrorDelete = () => ({ type: action.FETCH_RESOLVE_ERROR });
+
 export const fetchResolveProfiles = profilesArg => ({
   type: action.FETCH_RESOLVE_PROFILES,
   isLoading: false,
@@ -39,19 +48,19 @@ export const fetchResolveDetailProfile = detailProfileArg => ({
 
 export const fetchResolveEditPersonalData = personalData => ({
   type: action.FETCH_RESOLVE_EDIT_PERSONAL_DATA,
-  isLoading: false,
+  isLoadingForm: false,
   personalData,
 });
 
 export const fetchResolveEditContactData = contactData => ({
   type: action.FETCH_RESOLVE_EDIT_CONTACT_DATA,
-  isLoading: false,
+  isLoadingForm: false,
   contactData,
 });
 
 export const fetchResolveEditEmploymentData = employmentData => ({
   type: action.FETCH_RESOLVE_EDIT_EMPLOYMENT_DATA,
-  isLoading: false,
+  isLoadingForm: false,
   employmentData,
 });
 
@@ -59,8 +68,6 @@ export const updateStaffMemberInProfiles = personalData => ({
   type: action.UPDATE_STAFF_MEMBER_IN_PROFILES,
   personalData,
 });
-
-export const fetchResolveError = error => ({ type: action.FETCH_RESOLVE_ERROR, error });
 
 export const fetchDetailProfile = id => dispatch => {
   dispatch(fetchRequestDetailProfile());
@@ -72,7 +79,6 @@ export const fetchDetailProfile = id => dispatch => {
 };
 
 export const fetchProfiles = () => dispatch => {
-  console.log('taaak');
   dispatch(fetchRequestProfiles());
   return getProfiles()
     .then(profilesFail => {
@@ -86,28 +92,35 @@ export const fetchProfiles = () => dispatch => {
 
 export const fetchEditPersonalData = (id, data) => dispatch => {
   dispatch(fetchRequestEditPersonalData());
-  console.log(id, data);
-  return postPersonalInfo(id, data)
-    .then(newPersonalData => {
-      if (newPersonalData.errors === undefined) {
-        dispatch(fetchResolveEditPersonalData(newPersonalData));
-        dispatch(updateStaffMemberInProfiles(newPersonalData));
-      } else {
-        dispatch(fetchResolve(newPersonalData));
-      }
-    })
-    .catch(error => dispatch(fetchResolve(error)));
+  return new Promise((resolve, reject) => {
+    postPersonalInfo(id, data)
+      .then(response => {
+        dispatch(fetchResolveEditPersonalData(response.data));
+        dispatch(updateStaffMemberInProfiles(response.data));
+        dispatch(fetchResolveErrorDelete());
+        resolve(response.data);
+      })
+      .catch(error => {
+        dispatch(fetchResolveError());
+        reject(error.response.data);
+      });
+  });
 };
 
 export const fetchEditContactData = (id, data) => dispatch => {
   dispatch(fetchRequestEditContactData());
   console.log(id, data);
-  return postContactInfo(id, data)
-    .then(newContactData => {
-      console.log(newContactData);
-      dispatch(fetchResolveEditPersonalData(newContactData));
-    })
-    .catch(error => dispatch(fetchResolve(error)));
+  return new Promise((resolve, reject) => {
+    postContactInfo(id, data)
+      .then(response => {
+        dispatch(fetchResolveEditPersonalData(response.data));
+        resolve(response.data);
+      })
+      .catch(error => {
+        dispatch(fetchResolveError());
+        reject(error.response.data);
+      });
+  });
 };
 
 export const fetchEditEmploymentData = (id, data) => dispatch => {

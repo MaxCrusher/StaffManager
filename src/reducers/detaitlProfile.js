@@ -9,11 +9,18 @@ const initialState = {
   staffTypes: [],
   genderValues: [],
   isLoading: true,
+  isLoadingForm: false,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
     case actions.FETCH_REQUEST_DETAIL_PROFILES:
       return { ...state, isLoading: action.isLoading };
+    case actions.FETCH_REQUEST_EDIT_CONTACT_DATA:
+      return { ...state, isLoadingForm: action.isLoading };
+    case actions.FETCH_REQUEST_EDIT_EMPLOYMENT_DATA:
+      return { ...state, isLoadingForm: action.isLoading };
+    case actions.FETCH_REQUEST_EDIT_PERSONAL_DATA:
+      return { ...state, isLoadingForm: action.isLoading };
     case actions.FETCH_RESOLVE_DETAIL_PROFILE:
       return {
         ...state,
@@ -35,9 +42,9 @@ export default (state = initialState, action) => {
           phone: action.contactData.phoneNumber,
           email: action.contactData.emailAddress,
         },
+        isLoadingForm: action.isLoadingForm,
       };
-    case actions.FETCH_RESOLVE_EDIT_EMPLOYMENT_DATA: {
-      console.log(action);
+    case actions.FETCH_RESOLVE_EDIT_EMPLOYMENT_DATA:
       return {
         ...state,
         staffMember: {
@@ -53,13 +60,12 @@ export default (state = initialState, action) => {
           sageId: action.employmentData.sageId,
           statusStatement: action.employmentData.statusStatement,
         },
-        isLoading: action.isLoading,
+        isLoadingForm: action.isLoadingForm,
       };
-    }
-    case actions.FETCH_RESOLVE_EDIT_PERSONAL_DATA: {
-      console.log(action.personalData);
-      return { ...state, staffMember: action.personalData, isLoading: action.isLoading };
-    }
+    case actions.FETCH_RESOLVE_EDIT_PERSONAL_DATA:
+      return { ...state, staffMember: action.personalData, isLoadingForm: action.isLoadingForm };
+    case actions.FETCH_RESOLVE_ERROR:
+      return { ...state, errors: action.error, isLoadingForm: action.isLoadingForm, isLoading: action.isLoading };
     default:
       return { ...state };
   }

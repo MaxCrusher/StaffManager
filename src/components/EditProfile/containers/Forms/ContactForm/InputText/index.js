@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import { style } from '../../style';
 
 const InputText = props => {
+  const errors = () => {
+    if (props.meta.submitError) {
+      let text = '';
+      props.meta.submitError.forEach(elem => {
+        text += elem;
+      });
+      return text;
+    }
+    return null;
+  };
   const errorTextCharacter = 'This field can contain only character!';
   const errorTextNumber = 'This field can contain only number!';
   const errorTextEmail = 'It should be a correct email address!';
@@ -22,11 +32,7 @@ const InputText = props => {
         <div className="boss-form__error" style={props.meta.valid ? style.dNone : style.dBlock}>
           <p className="boss-form__error-text">
             <span className="boss-form__error-line">
-              {props.input.name === 'email'
-                ? errorTextEmail
-                : props.input.name === 'postcode'
-                ? errorTextNumber
-                : errorTextCharacter}
+              {errors() || props.meta.valid ? errors() : props.input.name === 'email' ? errorTextEmail : props.input.name === 'postcode' ? errorTextNumber : errorTextCharacter}
             </span>
           </p>
         </div>

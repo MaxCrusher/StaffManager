@@ -13,49 +13,43 @@ export const getDetailProfile = id =>
   }).then(response => response.json());
 
 export const postPersonalInfo = (id, data) =>
-  axios
-    .post(
-      'https://purrweb-internship.herokuapp.com/api/v1/staff_members/'.concat(id, '/update_personal_details'),
-      JSON.stringify({
-        firstName: data.firstName,
-        surname: data.surname,
-        gender: data.gender.value,
-        dateOfBirth: '12-12-1912',
-      }),
-      {
-        headers: {
-          Authorization: 'Token token=f4d91314f64309521727d059b271fe9b',
-          'Content-Type': 'application/json; charset=utf-8',
-        },
+  axios.post(
+    'https://purrweb-internship.herokuapp.com/api/v1/staff_members/'.concat(id, '/update_personal_details'),
+    JSON.stringify({
+      firstName: data.firstName,
+      surname: data.surname,
+      gender: data.gender.value,
+      dateOfBirth: '12-12-1912',
+    }),
+    {
+      headers: {
+        Authorization: 'Token token=f4d91314f64309521727d059b271fe9b',
+        'Content-Type': 'application/json; charset=utf-8',
       },
-    )
-    .then(response => response.data)
-    .catch(error => error.response.data);
+    },
+  );
 
 export const postContactInfo = (id, data) =>
-  axios
-    .post(
-      'https://purrweb-internship.herokuapp.com/api/v1/staff_members/'.concat(id, '/update_contact_details'),
-      JSON.stringify({
-        emailAddress: data.email,
-        phoneNumber: data.phone,
-        address: data.address,
-        postcode: data.postcode,
-        country: data.country,
-        county: data.county,
-      }),
-      {
-        headers: {
-          Authorization: 'Token token=f4d91314f64309521727d059b271fe9b',
-          'Content-Type': 'application/json; charset=utf-8',
-        },
+  axios.post(
+    'https://purrweb-internship.herokuapp.com/api/v1/staff_members/'.concat(id, '/update_contact_details'),
+    JSON.stringify({
+      emailAddress: data.email,
+      phoneNumber: data.phone ? data.phone : '',
+      address: data.address ? data.address : '',
+      postcode: data.postcode ? data.postcode : '',
+      country: data.country ? data.country : '',
+      county: data.county ? data.county : '',
+    }),
+    {
+      headers: {
+        Authorization: 'Token token=f4d91314f64309521727d059b271fe9b',
+        'Content-Type': 'application/json; charset=utf-8',
       },
-    )
-    .then(response => response.data)
-    .catch(error => console.log(error));
+    },
+  );
 
-export const postEmploymentInfo = (id, data) => {
-  return axios
+export const postEmploymentInfo = (id, data) =>
+  axios
     .post(
       'https://purrweb-internship.herokuapp.com/api/v1/staff_members/'.concat(id, '/update_employment_details'),
       JSON.stringify({
@@ -79,4 +73,3 @@ export const postEmploymentInfo = (id, data) => {
     )
     .then(response => response.data)
     .catch(error => console.log(error));
-}

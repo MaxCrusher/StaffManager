@@ -41,8 +41,6 @@ export default (state = initialState, action) => {
           ],
         },
       };
-    case actions.FETCH_RESOLVE_ERROR:
-      return { ...state, profiles: [], numProfiles: 0, detailProfile: [] };
     default:
       return { ...state };
   }
