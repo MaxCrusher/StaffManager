@@ -31,9 +31,7 @@ class DetailProfile extends Component {
   }
 
   render = () => {
-    console.log(this.props);
     if (this.props.isLoading || this.state.initial) {
-      console.log(this.props.isLoading, this.state.initial);
       return (
         <div className="centerSpiner">
           <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />

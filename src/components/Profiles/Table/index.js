@@ -13,7 +13,7 @@ class Table extends Component {
     if (this.props.isLoading && this.props.url === '/') {
       this.props
         .getProfiles()
-        .then(response => console.log(response.status))
+        .then(response => response.status)
         .catch(e => {
           alert('Все очень плохо, ошибка сервера'.concat(e.pesponse.status));
         });
@@ -21,8 +21,10 @@ class Table extends Component {
   }
 
   render = () => {
-    console.log(this.props);
-    const rows = this.props.profile.map((prof, i) => <Row key={i} id={prof.id} profile={prof} />);
+    const allRows = this.props.profile;
+    const rows = allRows
+      .slice(this.props.numPage, this.props.numPage + 10)
+      .map((prof, i) => <Row key={i} id={prof.id} profile={prof} />);
     if (this.props.isLoading) {
       return (
         <div className="centerSpiner">
@@ -56,4 +58,5 @@ Table.propTypes = {
   getProfiles: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   url: PropTypes.string.isRequired,
+  numPage: PropTypes.number.isRequired,
 };

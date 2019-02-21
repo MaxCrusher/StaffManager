@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import router from '../../../../route';
 
 class Forms extends Component {
@@ -10,7 +9,6 @@ class Forms extends Component {
       .routes.map((elem, i) => (
         <Route key={elem.path + i} path={elem.path} exact={elem.exact} component={elem.component} />
       ));
-    console.log(route);
     return (
       <Switch>
         <section className="boss-content-switcher__chapters">{route}</section>
@@ -19,4 +17,3 @@ class Forms extends Component {
   };
 }
 export default Forms;
-// <Route path={elem.path} exact={elem.exact} component={elem.component} />

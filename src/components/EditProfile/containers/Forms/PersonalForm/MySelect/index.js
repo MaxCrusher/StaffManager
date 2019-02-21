@@ -23,6 +23,6 @@ const MySelect = props => (
 export default MySelect;
 MySelect.propTypes = {
   input: PropTypes.object.isRequired,
-  options: PropTypes.object.isRequired,
+  options: PropTypes.array.isRequired,
   label: PropTypes.string.isRequired,
 };

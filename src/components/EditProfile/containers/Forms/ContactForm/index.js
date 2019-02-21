@@ -11,9 +11,7 @@ class ContactForm extends Component {
   onSubmit = async values => {
     const result = await this.props
       .editContactData(this.props.id, values)
-      .then(response => {
-        console.log('+');
-      })
+      .then(response => response.status)
       .catch(e => {
         if (e.response.status === 422) {
           return e.response.data.errors;

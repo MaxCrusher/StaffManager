@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import * as constUrl from '../../../../pathURL';
 
 class EditProfileHeader extends Component {
   render = () => (
@@ -9,9 +11,12 @@ class EditProfileHeader extends Component {
           <div className="boss-page-dashboard__group">
             <h1 className="boss-page-dashboard__title">Edit Profile</h1>
             <div className="boss-page-dashboard__buttons-group boss-page-dashboard__buttons-group_position_last">
-              <a href="#" className="boss-button boss-button_role_cancel boss-page-dashboard__button">
+              <Link
+                to={constUrl.detailURL.concat('/', this.props.id)}
+                className="boss-button boss-button_role_cancel boss-page-dashboard__button"
+              >
                 Cancel Editing
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -20,3 +25,6 @@ class EditProfileHeader extends Component {
   );
 }
 export default EditProfileHeader;
+EditProfileHeader.propTypes = {
+  id: PropTypes.number.isRequired,
+}

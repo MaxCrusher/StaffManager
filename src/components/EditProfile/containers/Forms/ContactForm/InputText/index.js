@@ -53,6 +53,4 @@ InputText.propTypes = {
   label: PropTypes.string.isRequired,
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
-  required: PropTypes.string.isRequired,
-  component: PropTypes.string.isRequired,
 };

@@ -13,16 +13,18 @@ import './index.css';
 
 class EmploymentForm extends Component {
   onSubmit = async values => {
-    console.log(values, this.props.employmentData.startsAt);
     const result = await this.props
       .editEmploymentInfo(this.props.id, {
         ...values,
         startsAt: values.startsAt.format('DD-MM-YYYY'),
       })
-      .then(response => {
-        console.log('+');
-      })
-      .catch(e => e.response.data.errors);
+      .then(response => response.status)
+      .catch(e => {
+        if (e.response.status === 422) {
+          return e.response.data.errors;
+        }
+        return window.alert('Очень серьезная ошибка сервера '.concat(e.response.status));
+      });
     return result;
   };
 
@@ -150,7 +152,6 @@ export default connect(
 )(EmploymentForm);
 EmploymentForm.propTypes = {
   employmentData: PropTypes.object.isRequired,
-  dateStart: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired,
   editEmploymentInfo: PropTypes.func.isRequired,
 };

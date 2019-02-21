@@ -27,7 +27,6 @@ class EditProfile extends Component {
   }
 
   render = () => {
-    console.log(this.props.isLoading, this.state.initial);
     if (this.props.isLoading || this.state.initial) {
       return (
         <div className="centerSpiner">
@@ -37,7 +36,7 @@ class EditProfile extends Component {
     }
     return (
       <main className="boss-page-main">
-        <EditProfileHeader />
+        <EditProfileHeader id={this.props.id} />
         <div className="boss-page-main__content">
           <div className="boss-page-main__inner">
             <div className="boss-content-switcher">

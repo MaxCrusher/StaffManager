@@ -16,7 +16,6 @@ const MySelect = props => {
     }
     return null;
   };
-  console.log(props.meta.valid);
   return (
     <div className="boss-form__field">
       <label htmlFor="select-pay-rate" className="boss-form__label">
@@ -47,6 +46,6 @@ MySelect.propTypes = {
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
-  options: PropTypes.object.isRequired,
+  options: PropTypes.array.isRequired,
   isMulti: PropTypes.bool.isRequired,
 };

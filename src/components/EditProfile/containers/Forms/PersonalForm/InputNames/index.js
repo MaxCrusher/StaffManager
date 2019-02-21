@@ -13,8 +13,6 @@ const InputNames = props => {
     }
     return null;
   };
-
-  console.log(errors());
   return (
     <div className="boss-form__field">
       <label className="boss-form__label">
@@ -45,6 +43,4 @@ InputNames.propTypes = {
   label: PropTypes.string.isRequired,
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
-  required: PropTypes.string.isRequired,
-  component: PropTypes.string.isRequired,
 };

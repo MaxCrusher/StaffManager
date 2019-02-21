@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 class Button extends Component {
   render = () => {
-    console.log(this.props);
     if (this.props.type === 'edit') {
       return (
         <Link

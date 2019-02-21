@@ -16,10 +16,13 @@ class PersonalForm extends Component {
   onSubmit = async values => {
     const result = await this.props
       .editPersonalData(this.props.id, { ...values, dateOfBirth: values.dateOfBirth.format('DD-MM-YYYY') })
-      .then(response => {
-        console.log('+');
-      })
-      .catch(e => e.response.data.errors);
+      .then(response => response)
+      .catch(e => {
+        if (e.response.status === 422) {
+          return e.response.data.errors;
+        }
+        return window.alert('Очень серьезная ошибка сервера '.concat(e.response.status));
+      });
     return result;
   };
 
@@ -118,8 +121,6 @@ export default connect(
 )(PersonalForm);
 PersonalForm.propTypes = {
   personalData: PropTypes.object.isRequired,
-  firstName: PropTypes.string.isRequired,
-  surname: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   editPersonalData: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
