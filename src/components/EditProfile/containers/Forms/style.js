@@ -1,5 +1,5 @@
-export const inputStyles = {
-  control: styles => ({ ...styles, height: '50px', borderRadius: '2px', borderColor: '#d8d8d8' }),
+export const inputStyles = error => ({
+  control: styles => ({ ...styles, height: '50px', borderRadius: '2px', borderColor: error ? '#d8d8d8' : '#ed7f7e' }),
   placeholder: styles => ({
     ...styles,
     lineHeight: '48px',
@@ -18,7 +18,7 @@ export const inputStyles = {
     ...styles,
     display: 'initial',
   }),
-};
+});
 
 export const style = {
   dNone: { display: 'none' },

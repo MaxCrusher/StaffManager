@@ -1,47 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
 import { Spinner } from 'reactstrap';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import { fetchEditPersonalData } from '../../../../../actions';
 import { personalData } from '../../../../selector';
-import { inputStyles } from '../style';
 import InputNames from './InputNames';
 import MySelect from './MySelect';
-import 'react-datepicker/dist/react-datepicker.css';
+import DateField from '../DateField';
 import './index.css';
 
 const options = [{ value: 'male', label: 'male' }, { value: 'female', label: 'female' }];
 class PersonalForm extends Component {
-  state = {
-    startDate: new Date(this.props.personalData.dateOfBirth),
-    isOpen: false,
-  };
-
   onSubmit = async values => {
-    let error;
-    await this.props
-      .editPersonalData(this.props.id, values)
+    const result = await this.props
+      .editPersonalData(this.props.id, { ...values, dateOfBirth: values.dateOfBirth.format('DD-MM-YYYY') })
       .then(response => {
         console.log('+');
       })
-      .catch(res => {
-        error = res.errors;
-      });
-    console.log(error);
-    return error;
+      .catch(e => e.response.data.errors);
+    return result;
   };
 
   handleChange = date => {
     this.setState({
       startDate: date,
     });
-  };
-
-  toggleCalendar = e => {
-    e && e.preventDefault();
-    this.setState({ isOpen: !this.state.isOpen });
   };
 
   render = () => {
@@ -79,7 +64,7 @@ class PersonalForm extends Component {
               firstName: this.props.personalData.firstName,
               surname: this.props.personalData.surname,
               gender: this.props.personalData.gender === 'male' ? options[0] : options[1],
-              dateOfBirth: '12-12-2000',
+              dateOfBirth: this.props.personalData.dateOfBirth ? moment(this.props.personalData.dateOfBirth) : null,
             }}
             render={({ handleSubmit, pristine, submitErrors }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
@@ -98,16 +83,7 @@ class PersonalForm extends Component {
                   validate={composeValidators(required, mustBeString)}
                 />
                 <Field label="Gender*" component={MySelect} options={options} name="gender" />
-
-                <div className="boss-form__field">
-                  <p className="boss-form__label">
-                    <span className="boss-form__label-text">Date of birth*</span>
-                  </p>
-
-                  <div className="date-picker-input" onClick={this.toggleCalendar}>
-                    <DatePicker dateFormat="dd/MM/yyyy" selected={this.state.startDate} onChange={this.handleChange} />
-                  </div>
-                </div>
+                <Field label="Date of birth*" component={DateField} name="dateOfBirth" />
                 <div className="boss-form__field boss-form__field_justify_end">
                   <button
                     className="boss-button boss-form__submit boss-form__submit_adjust_single"

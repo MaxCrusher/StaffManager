@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { style } from '../../style';
 
@@ -32,7 +32,13 @@ const InputText = props => {
         <div className="boss-form__error" style={props.meta.valid ? style.dNone : style.dBlock}>
           <p className="boss-form__error-text">
             <span className="boss-form__error-line">
-              {errors() || props.meta.valid ? errors() : props.input.name === 'email' ? errorTextEmail : props.input.name === 'postcode' ? errorTextNumber : errorTextCharacter}
+              {errors() || props.meta.valid
+                ? errors()
+                : props.input.name === 'email'
+                ? errorTextEmail
+                : props.input.name === 'postcode'
+                ? errorTextNumber
+                : errorTextCharacter}
             </span>
           </p>
         </div>

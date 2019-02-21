@@ -42,7 +42,7 @@ class EditProfile extends Component {
           <div className="boss-page-main__inner">
             <div className="boss-content-switcher">
               <div className="boss-content-switcher__inner">
-                <SwitchSection id={this.props.id} />
+                <SwitchSection id={this.props.id} url={this.props.match.url} />
                 <Forms />
               </div>
             </div>

@@ -64,72 +64,80 @@ export const fetchResolveEditEmploymentData = employmentData => ({
   employmentData,
 });
 
-export const updateStaffMemberInProfiles = personalData => ({
-  type: action.UPDATE_STAFF_MEMBER_IN_PROFILES,
+export const updateStaffMemberInProfilesPersonal = personalData => ({
+  type: action.UPDATE_STAFF_MEMBER_IN_PROFILES_PERSONAL,
   personalData,
+});
+
+export const updateStaffMemberInProfilesEmployment = employmentData => ({
+  type: action.UPDATE_STAFF_MEMBER_IN_PROFILES_EMPLOYMENT,
+  employmentData,
 });
 
 export const fetchDetailProfile = id => dispatch => {
   dispatch(fetchRequestDetailProfile());
   return getDetailProfile(id)
-    .then(detailPro => {
-      dispatch(fetchResolveDetailProfile(detailPro));
+    .then(response => {
+      dispatch(fetchResolveDetailProfile(response.data));
     })
-    .catch(error => dispatch(fetchResolve(error)));
+    .catch(error => {
+      dispatch(fetchResolve(error));
+      throw error;
+    });
 };
 
 export const fetchProfiles = () => dispatch => {
   dispatch(fetchRequestProfiles());
   return getProfiles()
-    .then(profilesFail => {
-      dispatch(fetchResolveProfiles(profilesFail));
+    .then(response => {
+      dispatch(fetchResolveProfiles(response.data));
+      return response.data;
     })
     .catch(error => {
-      console.log(error);
       dispatch(fetchResolveError(error));
+      throw error;
     });
 };
 
 export const fetchEditPersonalData = (id, data) => dispatch => {
   dispatch(fetchRequestEditPersonalData());
-  return new Promise((resolve, reject) => {
-    postPersonalInfo(id, data)
-      .then(response => {
-        dispatch(fetchResolveEditPersonalData(response.data));
-        dispatch(updateStaffMemberInProfiles(response.data));
-        dispatch(fetchResolveErrorDelete());
-        resolve(response.data);
-      })
-      .catch(error => {
-        dispatch(fetchResolveError());
-        reject(error.response.data);
-      });
-  });
+  return postPersonalInfo(id, data)
+    .then(response => {
+      dispatch(fetchResolveEditPersonalData(response.data));
+      dispatch(updateStaffMemberInProfilesPersonal(response.data));
+      dispatch(fetchResolveErrorDelete());
+      return response.data;
+    })
+    .catch(error => {
+      dispatch(fetchResolveError());
+      throw error;
+    });
 };
 
 export const fetchEditContactData = (id, data) => dispatch => {
   dispatch(fetchRequestEditContactData());
-  console.log(id, data);
-  return new Promise((resolve, reject) => {
-    postContactInfo(id, data)
-      .then(response => {
-        dispatch(fetchResolveEditPersonalData(response.data));
-        resolve(response.data);
-      })
-      .catch(error => {
-        dispatch(fetchResolveError());
-        reject(error.response.data);
-      });
-  });
+  return postContactInfo(id, data)
+    .then(response => {
+      dispatch(fetchResolveEditPersonalData(response.data));
+      return response.data;
+    })
+    .catch(error => {
+      dispatch(fetchResolveError());
+      throw error;
+    });
 };
 
 export const fetchEditEmploymentData = (id, data) => dispatch => {
   dispatch(fetchRequestEditEmploymentData());
   console.log(id, data);
   return postEmploymentInfo(id, data)
-    .then(newEmploymentData => {
-      console.log(newEmploymentData);
-      dispatch(fetchResolveEditEmploymentData(newEmploymentData));
+    .then(response => {
+      dispatch(fetchResolveEditEmploymentData(response.data));
+      dispatch(updateStaffMemberInProfilesEmployment(response.data));
+      return response.data;
     })
-    .catch(error => dispatch(fetchResolve(error)));
+    .catch(error => {
+      dispatch(fetchResolveError());
+      throw error;
+    });
 };

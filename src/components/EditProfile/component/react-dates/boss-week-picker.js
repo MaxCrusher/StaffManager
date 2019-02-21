@@ -1,18 +1,17 @@
 import React, { PureComponent } from 'react';
-import DayPickerRangeControllerWrapper from './day-picker-range-controller-wrapper';
 import PropTypes from 'prop-types';
-import safeMoment from '~/lib/safe-moment';
-import utils from '~/lib/utils';
+import oFetch from 'o-fetch';
+import moment from 'moment';
+import { START_DATE } from 'react-dates/constants';
+import DayPickerRangeControllerWrapper from './day-picker-range-controller-wrapper';
 import MonthElement from './month-element';
 import CalendarInfo from './calendar-info';
-import { START_DATE } from 'react-dates/constants';
-import oFetch from 'o-fetch';
 
 class BossWeekPicker extends PureComponent {
   constructor(props) {
     super(props);
     const selectionStartUIDate = oFetch(props, 'selectionStartUIDate');
-    const selectionStartDate = safeMoment.uiDateParse(selectionStartUIDate).startOf('isoWeek');
+    const selectionStartDate = moment(selectionStartUIDate, 'DD-MM-YYYY').startOf('isoWeek');
 
     this.state = {
       focusedInput: START_DATE,
@@ -20,6 +19,7 @@ class BossWeekPicker extends PureComponent {
       endDate: selectionStartDate.clone().add(6, 'd'),
     };
   }
+
   onDatesChange = ({ startDate, endDate }) => {
     this.setState({ startDate, endDate });
   };
@@ -35,12 +35,11 @@ class BossWeekPicker extends PureComponent {
     const [startDate, endDate] = oFetch(this.state, 'startDate', 'endDate');
     const selectionStartUIDate = oFetch(this.props, 'selectionStartUIDate');
 
-
     if (!startDate || !endDate) {
       return;
     }
-    const startUIDate = startDate.format(utils.commonDateFormat);
-    const endUIDate = endDate.format(utils.commonDateFormat);
+    const startUIDate = startDate.format('DD-MM-YYYY');
+    const endUIDate = endDate.format('DD-MM-YYYY');
 
     // if it is the same week
     if (startUIDate === selectionStartUIDate) {
@@ -59,7 +58,7 @@ class BossWeekPicker extends PureComponent {
 
   handleCancelChanges = () => {
     const selectionStartUIDate = oFetch(this.props, 'selectionStartUIDate');
-    const selectionStartDate = safeMoment.uiDateParse(selectionStartUIDate).startOf('isoWeek');
+    const selectionStartDate = moment(selectionStartUIDate).startOf('isoWeek');
     this.setState(
       {
         startDate: selectionStartDate,
@@ -69,9 +68,9 @@ class BossWeekPicker extends PureComponent {
     );
   };
 
-  renderMonthElement = ({ month, onMonthSelect, onYearSelect }) => {
-    return <MonthElement month={month} onMonthSelect={onMonthSelect} onYearSelect={onYearSelect} />;
-  };
+  renderMonthElement = ({ month, onMonthSelect, onYearSelect }) => (
+    <MonthElement month={month} onMonthSelect={onMonthSelect} onYearSelect={onYearSelect} />
+  );
 
   renderCalendarInfo = () => (
     <CalendarInfo

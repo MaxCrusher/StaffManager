@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import InputText from './InputText';
+import DateField from '../DateField';
 import MySelect from './MySelect';
 import InputsRadio from './InputsRadio';
 import { employmentData } from '../../../../selector';
 import { fetchEditEmploymentData } from '../../../../../actions';
-import 'react-datepicker/dist/react-datepicker.css';
 import './index.css';
 
 class EmploymentForm extends Component {
-  state = {
-    startDate: new Date(this.props.employmentData.startsAt),
-    isOpen: false,
-  };
-
-  onSubmit = values => {
-    console.log(values);
-    this.props.editEmploymentInfo(this.props.id, {
-      ...values,
-      startsAt: `${new Date(this.state.startDate).getDate()}-${new Date(this.state.startDate).getMonth() +
-        1}-${new Date(this.state.startDate).getFullYear()}`,
-    });
+  onSubmit = async values => {
+    console.log(values, this.props.employmentData.startsAt);
+    const result = await this.props
+      .editEmploymentInfo(this.props.id, {
+        ...values,
+        startsAt: values.startsAt.format('DD-MM-YYYY'),
+      })
+      .then(response => {
+        console.log('+');
+      })
+      .catch(e => e.response.data.errors);
+    return result;
   };
 
   handleChange = date => {
@@ -59,8 +59,13 @@ class EmploymentForm extends Component {
             masterVenue: this.props.employmentData.mainVenue,
             otherVenues: this.props.employmentData.otherVenue,
             employmentStatus: this.props.employmentData.employmentStatus,
+            startsAt: moment(
+              `${this.props.employmentData.startsAt[0]}-${this.props.employmentData.startsAt[1]}-${
+                this.props.employmentData.startsAt[2]
+              }`,
+            ),
           }}
-          render={({ handleSubmit, pristine, invalid }) => (
+          render={({ handleSubmit, pristine }) => (
             <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
               <Field
                 component={MySelect}
@@ -85,20 +90,7 @@ class EmploymentForm extends Component {
                 options={this.props.employmentData.staffTypes}
                 isMulti={false}
               />
-              <div className="boss-form__field">
-                <p className="boss-form__label">
-                  <span className="boss-form__label-text">Starts at*</span>
-                </p>
-
-                <div className="date-picker-input" onClick={this.toggleCalendar}>
-                  <DatePicker
-                    name="startsAt"
-                    dateFormat="dd/MM/yyyy"
-                    selected={this.state.startDate}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
+              <Field component={DateField} label="Starts at*" name="startsAt" />
               <Field
                 component={MySelect}
                 label="Pay rate*"
@@ -131,7 +123,7 @@ class EmploymentForm extends Component {
                 <button
                   className="boss-button boss-form__submit boss-form__submit_adjust_single"
                   type="submit"
-                  disabled={pristine || invalid}
+                  disabled={pristine}
                 >
                   Save
                 </button>

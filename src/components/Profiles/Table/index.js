@@ -11,7 +11,12 @@ import '../../../App.css';
 class Table extends Component {
   componentDidMount() {
     if (this.props.isLoading && this.props.url === '/') {
-      this.props.getProfiles();
+      this.props
+        .getProfiles()
+        .then(response => console.log(response.status))
+        .catch(e => {
+          alert('Все очень плохо, ошибка сервера'.concat(e.pesponse.status));
+        });
     }
   }
 

@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import { DateRangePicker } from 'react-dates';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { START_DATE, END_DATE } from 'react-dates/constants';
 import utils from '~/lib/utils';
 import oFetch from 'o-fetch';
 import MonthElement from './month-element';
 import CalendarInfo from './calendar-info';
-import { START_DATE, END_DATE } from 'react-dates/constants';
 
 class BossDateRangePicker extends PureComponent {
   constructor(props) {
@@ -107,7 +107,7 @@ class BossDateRangePicker extends PureComponent {
         withPortal
         showClearDates={showClearDates}
         isOutsideRange={isOutsideRange || this.isOutsideRange}
-        displayFormat={utils.commonDateFormat}
+        displayFormat={'DD-MM-YYYY'}
         startDate={startDate}
         endDate={endDate}
         onDatesChange={this.handleDatesChange}

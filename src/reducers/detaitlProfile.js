@@ -49,7 +49,7 @@ export default (state = initialState, action) => {
         ...state,
         staffMember: {
           ...state.staffMember,
-          mainVenueId: action.employmentData.masterVenueId,
+          masterVenueId: action.employmentData.masterVenueId,
           otherVenueIds: action.employmentData.otherVenueIds,
           staffTypeId: action.employmentData.staffTypeId,
           startsAt: action.employmentData.startsAt,

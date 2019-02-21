@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
         numProfiles: action.profilesArg.staffMembers.length,
         isLoading: action.isLoading,
       };
-    case actions.UPDATE_STAFF_MEMBER_IN_PROFILES:
+    case actions.UPDATE_STAFF_MEMBER_IN_PROFILES_PERSONAL:
       return {
         ...state,
         profiles: {
@@ -34,6 +34,24 @@ export default (state = initialState, action) => {
                   surname: action.personalData.surname,
                   gender: action.personalData.gender,
                   dateOfBirth: action.personalData.dateOfBirth,
+                };
+              }
+              return elem;
+            }),
+          ],
+        },
+      };
+    case actions.UPDATE_STAFF_MEMBER_IN_PROFILES_EMPLOYMENT:
+      return {
+        ...state,
+        profiles: {
+          ...state.profiles,
+          staffMembers: [
+            ...state.profiles.staffMembers.map(elem => {
+              if (elem.id === action.employmentData.id) {
+                return {
+                  ...elem,
+                  masterVenueId: action.employmentData.masterVenueId,
                 };
               }
               return elem;

@@ -17,7 +17,12 @@ class DetailProfile extends Component {
 
   componentDidMount() {
     if (this.props.isLoading) {
-      this.props.getDetailProfile(this.props.match.params.id).then(() => this.setState({ initial: false }));
+      this.props
+        .getDetailProfile(this.props.match.params.id)
+        .then(response => this.setState({ initial: false }))
+        .catch(e => {
+          alert('Все очень плохо, ошибка сервера'.concat(e.pesponse.status));
+        });
     } else if (Number(this.props.match.params.id) !== this.props.id) {
       this.props.getDetailProfile(this.props.match.params.id).then(() => this.setState({ initial: false }));
     } else {
@@ -59,13 +64,11 @@ class DetailProfile extends Component {
   };
 }
 
-const mapStateToProps = state => {
-  return {
-    detailProfile: getDetailProfile(state),
-    id: state.detailProfile.staffMember.id,
-    isLoading: state.detailProfile.isLoading,
-  };
-};
+const mapStateToProps = state => ({
+  detailProfile: getDetailProfile(state),
+  id: state.detailProfile.staffMember.id,
+  isLoading: state.detailProfile.isLoading,
+});
 
 const mapDispatchToProps = {
   getDetailProfile: fetchDetailProfile,

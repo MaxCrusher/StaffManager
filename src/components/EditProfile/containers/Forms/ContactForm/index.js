@@ -9,17 +9,18 @@ import { fetchEditContactData } from '../../../../../actions';
 
 class ContactForm extends Component {
   onSubmit = async values => {
-    let error;
-    await this.props
+    const result = await this.props
       .editContactData(this.props.id, values)
       .then(response => {
         console.log('+');
       })
-      .catch(res => {
-        error = res.errors;
+      .catch(e => {
+        if (e.response.status === 422) {
+          return e.response.data.errors;
+        }
+        return alert('Очень серьезная ошибка сервера '.concat(e.response.status));
       });
-    console.log(error);
-    return error;
+    return result;
   };
 
   render = () => {

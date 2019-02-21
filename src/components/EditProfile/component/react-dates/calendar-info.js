@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import oFetch from 'o-fetch';
 import AsyncButton from 'react-async-button';
-import utils from '~/lib/utils';
 import moment from 'moment';
+
+const format = 'DD-MM-YYYY';
 
 class CalendarInfo extends React.PureComponent {
   render() {
@@ -20,9 +21,9 @@ class CalendarInfo extends React.PureComponent {
       <div>
         <div className="DayPicker_preview">
           <p className="DayPicker_preview-text">
-            {date && date.format(utils.commonDateFormat)}
-            {startDate && startDate.format(utils.commonDateFormat)}
-            {endDate && ` — ${endDate.format(utils.commonDateFormat)}`}
+            {date && date.format(format)}
+            {startDate && startDate.format(format)}
+            {endDate && ` — ${endDate.format(format)}`}
           </p>
         </div>
         <div className="DayPicker_actions">

@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import { SingleDatePicker } from 'react-dates';
+import oFetch from 'o-fetch';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import utils from '~/lib/utils';
 import MonthElement from './month-element';
 import CalendarInfo from './calendar-info';
-import oFetch from 'o-fetch';
+import 'react-dates/initialize';
 
 class BossDatePicker extends PureComponent {
   constructor(props) {
@@ -85,7 +85,7 @@ class BossDatePicker extends PureComponent {
           withPortal
           showClearDate={showClearDate}
           isOutsideRange={isOutsideRange || this.isOutsideRange}
-          displayFormat={utils.commonDateFormat}
+          displayFormat="DD-MM-YYYY"
           date={date}
           onDateChange={this.handleDateChange}
           focused={focused}
