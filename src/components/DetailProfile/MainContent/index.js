@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getDetailProfile } from '../../selector';
 import EmploymentDetails from './EmploymentDetails';
 import AccountDetails from './AccountDetails';
 import PersonalDetails from './PersonalDetails';
@@ -12,23 +14,29 @@ class MainContent extends Component {
     <div className="boss-page-main__content">
       <div className="boss-page-main__inner">
         <div className="boss-page-main__flow">
-          <EmploymentDetails content={this.props.employmentDetail} id={this.props.id} />
-          <AccountDetails content={this.props.accountDetail} />
-          <PersonalDetails content={this.props.personalDetail} />
-          <ContactDetails content={this.props.contactDetail} />
-          <MobileApps content={this.props.mobileApp} />
+          <EmploymentDetails content={this.props.detailProfile.employmentDetail} id={this.props.id} />
+          <AccountDetails content={this.props.detailProfile.accountDetail} />
+          <PersonalDetails content={this.props.detailProfile.personalDetail} />
+          <ContactDetails content={this.props.detailProfile.contactDetail} />
+          <MobileApps content={this.props.detailProfile.mobileApp} />
           <RevisionsHistory />
         </div>
       </div>
     </div>
   );
 }
-export default MainContent;
+const mapStateToProps = state => ({
+  detailProfile: getDetailProfile(state),
+  id: state.detailProfile.staffMember.id,
+  isLoading: state.detailProfile.isLoading,
+});
+
+export default connect(mapStateToProps)(MainContent);
+
 MainContent.propTypes = {
+  getDetailProfile: PropTypes.func.isRequired,
+  detailProfile: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
-  employmentDetail: PropTypes.object.isRequired,
-  accountDetail: PropTypes.object.isRequired,
-  personalDetail: PropTypes.object.isRequired,
-  contactDetail: PropTypes.object.isRequired,
-  mobileApp: PropTypes.object.isRequired,
 };

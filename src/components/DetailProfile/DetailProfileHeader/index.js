@@ -17,7 +17,7 @@ class DetailProfileHeader extends Component {
             jobType={this.props.jobType}
             mainVenue={this.props.mainVenue}
           />
-          <MenuButton />
+          <MenuButton id={this.props.id} />
         </div>
       </div>
     </div>

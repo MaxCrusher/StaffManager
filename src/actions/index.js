@@ -79,6 +79,7 @@ export const fetchDetailProfile = id => dispatch => {
   return getDetailProfile(id)
     .then(response => {
       dispatch(fetchResolveDetailProfile(response.data));
+      return response.data;
     })
     .catch(error => {
       dispatch(fetchResolve(error));

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Spinner } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DetailProfileHeader from './DetailProfileHeader';
-import MainContent from './MainContent';
 import { getDetailProfile } from '../selector';
 import { fetchDetailProfile } from '../../actions';
+import router from '../../route';
 
 class DetailProfile extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class DetailProfile extends Component {
         .getDetailProfile(this.props.match.params.id)
         .then(response => this.setState({ initial: false }))
         .catch(e => {
-          alert('Все очень плохо, ошибка сервера'.concat(e.pesponse.status));
+          window.alert('Все очень плохо, ошибка сервера'.concat(e));
         });
     } else if (Number(this.props.match.params.id) !== this.props.id) {
       this.props.getDetailProfile(this.props.match.params.id).then(() => this.setState({ initial: false }));
@@ -31,6 +32,25 @@ class DetailProfile extends Component {
   }
 
   render = () => {
+    console.log(this.props.match);
+    let header = (
+      <DetailProfileHeader
+        id={this.props.detailProfile.id}
+        img={this.props.detailProfile.img}
+        name={this.props.detailProfile.personalDetail.name}
+        email={this.props.detailProfile.contactDetail.email}
+        phone={this.props.detailProfile.contactDetail.phone}
+        jobType={this.props.detailProfile.employmentDetail.jobType}
+        mainVenue={this.props.detailProfile.employmentDetail.mainVenue}
+      />
+    );
+    const route = router
+      .filter(elem => elem.com === 'DetailProfile')
+      .map(el =>
+        el.routes.map((elem, i) => (
+          <Route key={elem.path + i} path={elem.path} exact={elem.exact} component={elem.component} />
+        )),
+      );
     if (this.props.isLoading || this.state.initial) {
       return (
         <div className="centerSpiner">
@@ -38,25 +58,13 @@ class DetailProfile extends Component {
         </div>
       );
     }
+    if (this.props.match.path === '/detail/:id/edit') {
+      header = null;
+    }
     return (
       <main className="boss-page-main">
-        <DetailProfileHeader
-          id={this.props.detailProfile.id}
-          img={this.props.detailProfile.img}
-          name={this.props.detailProfile.personalDetail.name}
-          email={this.props.detailProfile.contactDetail.email}
-          phone={this.props.detailProfile.contactDetail.phone}
-          jobType={this.props.detailProfile.employmentDetail.jobType}
-          mainVenue={this.props.detailProfile.employmentDetail.mainVenue}
-        />
-        <MainContent
-          id={this.props.detailProfile.id}
-          employmentDetail={this.props.detailProfile.employmentDetail}
-          accountDetail={this.props.detailProfile.accountDetail}
-          personalDetail={this.props.detailProfile.personalDetail}
-          contactDetail={this.props.detailProfile.contactDetail}
-          mobileApp={this.props.detailProfile.mobileApp}
-        />
+        {header}
+        <Switch>{route}</Switch>
       </main>
     );
   };
@@ -84,3 +92,11 @@ DetailProfile.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
 };
+/* <MainContent
+          id={this.props.detailProfile.id}
+          employmentDetail={this.props.detailProfile.employmentDetail}
+          accountDetail={this.props.detailProfile.accountDetail}
+          personalDetail={this.props.detailProfile.personalDetail}
+          contactDetail={this.props.detailProfile.contactDetail}
+          mobileApp={this.props.detailProfile.mobileApp}
+        /> */
