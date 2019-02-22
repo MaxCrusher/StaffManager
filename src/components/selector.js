@@ -12,7 +12,30 @@ export const getStaffTypesDP = state => state.detailProfile.staffTypes;
 export const getVenuesDP = state => state.detailProfile.venues;
 export const payRates = state => state.detailProfile.payRates;
 
+export const getHolidayMembers = state => state.holiday.staffMemberHolidays;
+export const getHolidayType = state => state.holiday.types;
+export const getHolidayStatus = state => state.holiday.status;
+
 // export const staffTypes = (id, state) => state.profiles.profiles.staffTypes.filter(elem => elem.id === id)[0].name;
+
+export const getHolidays = createSelector(
+  getHolidayMembers,
+  getHolidayType,
+  getHolidayStatus,
+  getStaffMembers,
+  (holidays, types, stat, members) =>
+    holidays.map(hol => ({
+      ...hol,
+      firstName: members.staffMember
+        ? members.filter(elem => elem.staffMembers.id === hol.idUser)[0].staffMembers.firstName
+        : null,
+      surname: members.staffMember
+        ? members.filter(elem => elem.staffMembers.id === hol.idUser)[0].staffMembers.surname
+        : null,
+      status: stat.filter(elem => elem.id === hol.idStatus)[0].name,
+      type: types.filter(elem => elem.id === hol.idType)[0].name,
+    })),
+);
 
 export const getProfile = createSelector(
   getStaffMembers,

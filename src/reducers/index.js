@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import profiles from './profiles';
 import detailProfile from './detaitlProfile';
-import errors from './errors';
+import holiday from './holidays';
 
-const rootReducer = combineReducers({ profiles, detailProfile, errors });
+const rootReducer = combineReducers({ profiles, detailProfile, holiday });
 export default rootReducer;
