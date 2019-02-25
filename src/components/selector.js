@@ -26,13 +26,8 @@ export const getHolidays = createSelector(
   (holidays, types, stat, members) =>
     holidays.map(hol => ({
       ...hol,
-      firstName: members.staffMember
-        ? members.filter(elem => elem.staffMembers.id === hol.idUser)[0].staffMembers.firstName
-        : null,
-      surname: members.staffMember
-        ? members.filter(elem => elem.staffMembers.id === hol.idUser)[0].staffMembers.surname
-        : null,
-      status: stat.filter(elem => elem.id === hol.idStatus)[0].name,
+      user: members ? members.filter(elem => elem.id === hol.idUser)[0] : null,
+      status: stat.filter(elem => elem.id === hol.idStatus)[0],
       type: types.filter(elem => elem.id === hol.idType)[0].name,
     })),
 );

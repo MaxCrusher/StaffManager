@@ -1,6 +1,14 @@
 import * as action from '../action-type';
 
-import { getProfiles, getDetailProfile, postPersonalInfo, postContactInfo, postEmploymentInfo } from '../servises';
+import {
+  getProfiles,
+  getDetailProfile,
+  postPersonalInfo,
+  postContactInfo,
+  postEmploymentInfo,
+  fetchGetHolidays,
+  fetchDeleteHoliday,
+} from '../servises';
 
 export const detailProfile = idArg => ({ type: action.DETAIL_PROFILE, id: idArg });
 
@@ -21,6 +29,13 @@ export const fetchRequestEditEmploymentData = () => ({
 
 export const fetchRequestProfiles = () => ({ type: action.FETCH_REQUEST_PROFILES, isLoading: true });
 
+export const fetchRequestGetHolidays = idArg => ({ type: action.FETCH_REQUEST_HOLIDAYS, id: idArg, isLoading: true });
+
+export const fetchRequestDeleteHoliday = () => ({
+  type: action.FETCH_REQUEST_DELETE_HOLIDAY,
+  isLoading: true,
+});
+
 export const fetchRequestDetailProfile = () => ({ type: action.FETCH_REQUEST_DETAIL_PROFILES, isLoading: true });
 
 export const fetchResolve = () => ({ type: action.FETCH_RESOLVE });
@@ -33,6 +48,12 @@ export const fetchResolveError = error => ({
 });
 
 export const fetchResolveErrorDelete = () => ({ type: action.FETCH_RESOLVE_ERROR });
+
+export const fetchResolveHolidays = holidaysArg => ({
+  type: action.FETCH_RESOLVE_HOLIDAYS,
+  isLoading: false,
+  holidaysArg,
+});
 
 export const fetchResolveProfiles = profilesArg => ({
   type: action.FETCH_RESOLVE_PROFILES,
@@ -64,6 +85,12 @@ export const fetchResolveEditEmploymentData = employmentData => ({
   employmentData,
 });
 
+export const fetchResolveDeleteHoliday = idArg => ({
+  type: action.FETCH_RESOLVE_DELETE_HOLIDAY,
+  isLoading: false,
+  id: idArg,
+});
+
 export const updateStaffMemberInProfilesPersonal = personalData => ({
   type: action.UPDATE_STAFF_MEMBER_IN_PROFILES_PERSONAL,
   personalData,
@@ -72,6 +99,10 @@ export const updateStaffMemberInProfilesPersonal = personalData => ({
 export const updateStaffMemberInProfilesEmployment = employmentData => ({
   type: action.UPDATE_STAFF_MEMBER_IN_PROFILES_EMPLOYMENT,
   employmentData,
+});
+
+export const updateHolidaysIsLoading = () => ({
+  type: action.UPDATE_HOLIDAYS_IS_LOADING,
 });
 
 export const fetchDetailProfile = id => dispatch => {
@@ -139,6 +170,32 @@ export const fetchEditEmploymentData = (id, data) => dispatch => {
     })
     .catch(error => {
       dispatch(fetchResolveError());
+      throw error;
+    });
+};
+
+export const failFetchGetHolidays = () => dispatch => {
+  dispatch(fetchRequestGetHolidays());
+  return fetchGetHolidays()
+    .then(response => {
+      dispatch(fetchResolveHolidays(response));
+      return response;
+    })
+    .catch(error => {
+      dispatch(fetchResolveError());
+      throw error;
+    });
+};
+
+export const failDeleteHoliday = id => dispatch => {
+  dispatch(fetchRequestDeleteHoliday());
+  return fetchDeleteHoliday(id)
+    .then(response => {
+      dispatch(fetchResolveDeleteHoliday(response));
+      return response;
+    })
+    .catch(error => {
+      dispatch(fetchResolveErrorDelete());
       throw error;
     });
 };

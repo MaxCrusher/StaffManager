@@ -42,13 +42,32 @@ const initialState = {
   ],
   isLoading: true,
   types: [{ id: 1, name: 'Unpaid Holiday' }, { id: 2, name: 'Paid Holiday' }],
-  status: [{ id: 1, name: 'PENDING' }, { id: 2, name: 'ACCEPTED' }, { id: 3, name: 'REJECTED' }],
+  status: [
+    { id: 1, name: 'PENDING', color: '#aaa' },
+    { id: 2, name: 'ACCEPTED', color: '#86dd75' },
+    { id: 3, name: 'REJECTED', color: '#ed7f7e' },
+  ],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case actions.FETCH_REQUEST_HOLIDAYS:
+      return { ...state, isLoading: action.isLoading };
+    case actions.FETCH_RESOLVE_HOLIDAYS:
+      return { ...state, ...action.holidayArg };
+    case actions.FETCH_REQUEST_DELETE_HOLIDAY:
+      return { ...state, isLoading: action.isLoading };
+    case actions.FETCH_RESOLVE_DELETE_HOLIDAY: {
+      return {
+        ...state,
+        staffMemberHolidays: state.staffMemberHolidays.filter(elem => elem.id !== action.id),
+        isLoading: action.isLoading,
+      };
+    }
     case actions.FETCH_RESOLVE_ERROR_DELETE:
       return { ...state, errors: {} };
+    case actions.UPDATE_HOLIDAYS_IS_LOADING:
+      return { ...state, isLoading: !state.isLoading };
     default:
       return { ...state };
   }

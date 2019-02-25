@@ -1,5 +1,54 @@
 import axios from 'axios';
 
+const initialStateHoliday = {
+  staffMemberHolidays: [
+    {
+      id: 1,
+      idUser: 519,
+      idType: 1,
+      idStatus: 1,
+      startDate: '11-04-2018',
+      endDate: '11-05-2018',
+      note: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique blanditiis officia non libero.',
+      payslipDate: '11-04-2018',
+      createDate: '11-03-2018',
+      frozen: false,
+    },
+    {
+      id: 2,
+      idUser: 566,
+      idType: 2,
+      idStatus: 2,
+      startDate: '12-04-2018',
+      endDate: '12-05-2018',
+      note:
+        'Quam molestias minima doloribus vel in, quas cupiditate, vitae nesciunt veritatis ipsa quod porro neque numquam aperiam?',
+      payslipDate: '12-04-2018',
+      createDate: '12-03-2018',
+      frozen: true,
+    },
+    {
+      id: 3,
+      idUser: 647,
+      idType: 1,
+      idStatus: 3,
+      startDate: '13-04-2018',
+      endDate: '13-05-2018',
+      note: 'Similique blanditiis officia non libero.',
+      payslipDate: '13-04-2018',
+      createDate: '13-03-2018',
+      frozen: false,
+    },
+  ],
+  isLoading: true,
+  types: [{ id: 1, name: 'Unpaid Holiday' }, { id: 2, name: 'Paid Holiday' }],
+  status: [
+    { id: 1, name: 'PENDING', color: '#aaa' },
+    { id: 2, name: 'ACCEPTED', color: '#86dd75' },
+    { id: 3, name: 'REJECTED', color: '#ed7f7e' },
+  ],
+};
+
 const axiosInstance = axios.create({
   headers: { Authorization: 'Token token=f4d91314f64309521727d059b271fe9b' },
 });
@@ -49,3 +98,19 @@ export const postEmploymentInfo = (id, data) =>
       staffType: data.staffType.id,
     },
   );
+
+export const fetchGetHolidays = () =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(initialStateHoliday);
+    }, 2000);
+  });
+
+export const fetchDeleteHoliday = id => {
+  console.log(id);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(id);
+    }, 2000);
+  });
+};

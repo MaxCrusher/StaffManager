@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 export class ItemRow extends Component {
   render = () => {
     console.log('object');
-    const statusP = <p className="boss-table__text boss-table__text_role_pending-status">{this.props.text}</p>;
+    const statusP = (
+      <p className="boss-table__text boss-table__text_role_pending-status" style={{ color: this.props.color }}>
+        {this.props.text}
+      </p>
+    );
     const dateP = (
       <p className="boss-table__text">
         {this.props.startDate}
@@ -34,4 +38,5 @@ ItemRow.propTypes = {
   name: PropTypes.string,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
+  color: PropTypes.string,
 };

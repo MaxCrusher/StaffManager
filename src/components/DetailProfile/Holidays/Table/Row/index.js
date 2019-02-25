@@ -8,9 +8,14 @@ class Row extends Component {
   render = () => {
     console.log(this.props);
     return (
-      <div className="boss-table__row">
+      <div className={this.props.holiday.frozen ? 'boss-table__row boss-table__row_state_frozen' : 'boss-table__row'}>
         <ItemRow label="Types" text={this.props.holiday.type} />
-        <ItemRow label="Status" text={this.props.holiday.status} name="status" />
+        <ItemRow
+          label="Status"
+          text={this.props.holiday.status.name}
+          color={this.props.holiday.status.color}
+          name="status"
+        />
         <ItemRow
           label="Dates"
           name="date"
@@ -19,11 +24,11 @@ class Row extends Component {
         />
         <ItemRow label="Note" text={this.props.holiday.note} />
         <ItemRowCreated
-          user={this.props.holiday.firstName.concat(' ', this.props.holiday.surname)}
+          user={this.props.holiday.user.firstName.concat(' ', this.props.holiday.user.surname)}
           date={this.props.holiday.createDate}
         />
         <ItemRow label="Payslip Date" text={this.props.holiday.payslipDate} />
-        <ItemRowButton />
+        <ItemRowButton frozen={this.props.holiday.frozen} id={this.props.holiday.id} />
       </div>
     );
   };

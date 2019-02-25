@@ -4,21 +4,35 @@ import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
 import Table from './Table';
 import { getHolidays } from '../../selector';
-import { fetchProfiles } from '../../../actions';
+import { fetchProfiles, updateHolidaysIsLoading, failFetchGetHolidays } from '../../../actions';
 
 class Holidays extends Component {
-  componentDidMount() {
-    this.props
-      .getProfiles()
-      .then(response => response.status)
-      .catch(e => {
-        alert('Все очень плохо, ошибка сервера'.concat(e.pesponse.status));
-      });
-  }
+  state = {
+    initial: true,
+  };
+
+  componentDidMount = async () => {
+    if (this.props.isLoading) {
+      this.props
+        .getProfiles()
+        .then(
+          this.props
+            .getHolidays()
+            .then(response => this.props.updateIsLoading())
+            .catch(e => {
+              alert('Все очень плохо, ошибка сервера'.concat(e.pesponse.status));
+            }),
+        )
+        .catch(e => {
+          alert('Все очень плохо, ошибка сервера'.concat(e.pesponse.status));
+        });
+    }
+  };
 
   render = () => {
     console.log(this.props, '+');
     if (this.props.isLoading) {
+      console.log('=+');
       return (
         <div className="centerSpiner">
           <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />
@@ -101,6 +115,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getProfiles: fetchProfiles,
+  getHolidays: failFetchGetHolidays,
+  updateIsLoading: updateHolidaysIsLoading,
 };
 
 export default connect(
@@ -110,5 +126,7 @@ export default connect(
 Holidays.propTypes = {
   holidays: PropTypes.array.isRequired,
   getProfiles: PropTypes.func.isRequired,
+  getHolidays: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  updateIsLoading: PropTypes.func.isRequired,
 };
