@@ -28,7 +28,9 @@ export const getHolidays = createSelector(
       ...hol,
       user: members ? members.filter(elem => elem.id === hol.idUser)[0] : null,
       status: stat.filter(elem => elem.id === hol.idStatus)[0],
+      statusMas: stat.map(elem => ({ ...elem, label: elem.name, value: elem.name })),
       type: types.filter(elem => elem.id === hol.idType)[0].name,
+      typeMas: types.map(elem => ({ ...elem, label: elem.name, value: elem.name })),
     })),
 );
 

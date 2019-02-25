@@ -64,6 +64,26 @@ export default (state = initialState, action) => {
         isLoading: action.isLoading,
       };
     }
+    case actions.FETCH_REQUEST_EDIT_HOLIDAY:
+      return { ...state };
+    case actions.FETCH_RESOLVE_EDIT_HOLIDAY:
+      return {
+        ...state,
+        staffMemberHolidays: {
+          ...state.staffMemberHolidays.map(elem => {
+            if (elem.id === action.idArg) {
+              console.log(elem);
+              return {
+                ...elem,
+                note: action.data.area,
+                startDate: action.data.dates.startDate,
+                endDate: action.data.dates.endDate,
+                idType: action.data.type.id,
+              };
+            }
+          }),
+        },
+      };
     case actions.FETCH_RESOLVE_ERROR_DELETE:
       return { ...state, errors: {} };
     case actions.UPDATE_HOLIDAYS_IS_LOADING:

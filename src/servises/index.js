@@ -114,3 +114,12 @@ export const fetchDeleteHoliday = id => {
     }, 2000);
   });
 };
+
+export const fetchEditHoliday = (id, data) => {
+  console.log(id, data);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({ id, data });
+    }, 2000);
+  });
+};

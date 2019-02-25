@@ -3,7 +3,6 @@ import { DateRangePicker } from 'react-dates';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { START_DATE, END_DATE } from 'react-dates/constants';
-import utils from '~/lib/utils';
 import oFetch from 'o-fetch';
 import MonthElement from './month-element';
 import CalendarInfo from './calendar-info';

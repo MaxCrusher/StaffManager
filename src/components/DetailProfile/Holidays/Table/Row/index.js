@@ -28,7 +28,7 @@ class Row extends Component {
           date={this.props.holiday.createDate}
         />
         <ItemRow label="Payslip Date" text={this.props.holiday.payslipDate} />
-        <ItemRowButton frozen={this.props.holiday.frozen} id={this.props.holiday.id} />
+        <ItemRowButton holiday={this.props.holiday} />
       </div>
     );
   };

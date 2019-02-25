@@ -8,6 +8,7 @@ import {
   postEmploymentInfo,
   fetchGetHolidays,
   fetchDeleteHoliday,
+  fetchEditHoliday,
 } from '../servises';
 
 export const detailProfile = idArg => ({ type: action.DETAIL_PROFILE, id: idArg });
@@ -34,6 +35,12 @@ export const fetchRequestGetHolidays = idArg => ({ type: action.FETCH_REQUEST_HO
 export const fetchRequestDeleteHoliday = () => ({
   type: action.FETCH_REQUEST_DELETE_HOLIDAY,
   isLoading: true,
+});
+
+export const fetchRequestEditHoliday = (idArg, data) => ({
+  type: action.FETCH_REQUEST_EDIT_HOLIDAY,
+  idArg,
+  data,
 });
 
 export const fetchRequestDetailProfile = () => ({ type: action.FETCH_REQUEST_DETAIL_PROFILES, isLoading: true });
@@ -89,6 +96,12 @@ export const fetchResolveDeleteHoliday = idArg => ({
   type: action.FETCH_RESOLVE_DELETE_HOLIDAY,
   isLoading: false,
   id: idArg,
+});
+
+export const fetchResolveEditHoliday = (idArg, data) => ({
+  type: action.FETCH_RESOLVE_EDIT_HOLIDAY,
+  idArg,
+  data,
 });
 
 export const updateStaffMemberInProfilesPersonal = personalData => ({
@@ -196,6 +209,20 @@ export const failDeleteHoliday = id => dispatch => {
     })
     .catch(error => {
       dispatch(fetchResolveErrorDelete());
+      throw error;
+    });
+};
+
+export const failEditHoliday = (id, data) => dispatch => {
+  dispatch(fetchRequestEditHoliday(id, data));
+  return fetchEditHoliday(id, data)
+    .then(response => {
+      console.log(response);
+      dispatch(fetchResolveEditHoliday(response.id, response.data));
+      return response;
+    })
+    .catch(error => {
+      dispatch(fetchResolveError());
       throw error;
     });
 };
