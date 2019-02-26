@@ -3,15 +3,23 @@ import PropTypes from 'prop-types';
 import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
 import Table from './Table';
-import { getHolidays } from '../../selector';
-import { fetchProfiles, updateHolidaysIsLoading, failFetchGetHolidays } from '../../../actions';
+import Filter from './Filter';
+import { getHolidays, getTypesAndStatus } from '../../selector';
+import { fetchProfiles, updateHolidaysIsLoading, failFetchGetHolidays, updateHolidaysA } from '../../../actions';
 
 class Holidays extends Component {
   state = {
+    holidays: this.props.holidays,
     initial: true,
+    type: null,
+    dateFilter: {
+      startDate: '',
+      endDate: '',
+    },
   };
 
   componentDidMount = async () => {
+    console.log(this.state, this.props.holidays);
     if (this.props.isLoading) {
       this.props
         .getProfiles()
@@ -29,10 +37,25 @@ class Holidays extends Component {
     }
   };
 
+  filter = data => {
+    console.log(data);
+    this.props.updateHolydays(data);
+    /* const holidaysNew = this.state.holidays.filter(
+      hol =>
+        type === null ||
+        (hol.idType === type.id &&
+          hol.startDate > data.datesFilter.startDate &&
+          hol.endDate < data.datesFilter.endDate),
+    );
+    this.setState({
+      holidays: holidaysNew,
+    });
+    // filterHolidays(data.typeFilter, data.datesFilter)(this.props); */
+  };
+
   render = () => {
-    console.log(this.props, '+');
+    console.log(this.props);
     if (this.props.isLoading) {
-      console.log('=+');
       return (
         <div className="centerSpiner">
           <Spinner style={{ width: '5rem', height: '5rem' }} color="primary" />
@@ -72,31 +95,13 @@ class Holidays extends Component {
                   </div>
                 </div>
                 <div className="boss-board__manager-group boss-board__manager-group_role_data">
-                  <div className="boss-board__manager-filter">
-                    <form action="#" className="boss-form">
-                      <div className="boss-form__group boss-form__group_position_last">
-                        <h3 className="boss-form__group-title">Filter</h3>
-                        <div className="boss-form__row boss-form__row_align_center boss-form__row_desktop boss-form__row_position_last">
-                          <div className="boss-form__field boss-form__field_layout_quarter">
-                            <label className="boss-form__label">
-                              <span className="boss-form__label-text">Type</span>
-                            </label>
-                            <div className="boss-form__select">select</div>
-                          </div>
-                          <div className="boss-form__field boss-form__field_layout_max boss-form__field_no-label">
-                            <div className="date-range-picker date-range-picker_type_interval-fluid date-range-picker_type_icon date-range-picker_no-label">
-                              range-datepicker
-                            </div>
-                          </div>
-                          <div className="boss-form__field boss-form__field_layout_min boss-form__field_no-label">
-                            <button className="boss-button boss-form__submit" type="submit">
-                              Update
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+                  <Filter
+                    options={this.props.masTypeAndStatus.typeMas}
+                    onFilter={this.filter}
+                    typeFilter={this.props.holidays.typeFilter}
+                    datesFilter={this.props.holidays.datesFilter}
+                    history={this.props.history}
+                  />
                   <Table holidays={this.props.holidays} />
                 </div>
               </div>
@@ -110,6 +115,7 @@ class Holidays extends Component {
 
 const mapStateToProps = state => ({
   holidays: getHolidays(state),
+  masTypeAndStatus: getTypesAndStatus(state),
   isLoading: state.holiday.isLoading,
 });
 
@@ -117,6 +123,7 @@ const mapDispatchToProps = {
   getProfiles: fetchProfiles,
   getHolidays: failFetchGetHolidays,
   updateIsLoading: updateHolidaysIsLoading,
+  updateHolydays: updateHolidaysA,
 };
 
 export default connect(
@@ -129,4 +136,8 @@ Holidays.propTypes = {
   getHolidays: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   updateIsLoading: PropTypes.func.isRequired,
+  masTypeAndStatus: PropTypes.object.isRequired,
+  updateHolydays: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };

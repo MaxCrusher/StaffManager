@@ -17,7 +17,7 @@ const MySelectModal = props => {
     return null;
   };
   return (
-    <div className="boss-form__field boss-form__field_layout_third">
+    <div>
       <label htmlFor="select-pay-rate" className="boss-form__label">
         <span className="boss-form__label-text">{props.label}</span>
       </label>

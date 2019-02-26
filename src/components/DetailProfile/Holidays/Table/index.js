@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Row from './Row';
 import RowMin from './RowMin';
@@ -6,16 +7,15 @@ import MainRow from './MainRow';
 
 export class Table extends Component {
   render = () => {
-    console.log(this.props);
     const row = this.props.holidays.map(elem => <Row key={elem.id + elem.createDate} holiday={elem} />);
-    console.log('object');
+    const minRow = this.props.holidays.map(elem => <RowMin key={elem.id + elem.createDate} holiday={elem} />);
     return (
       <div className="boss-board__manager-table">
         <div className="boss-table boss-table_page_smp-holiday-requests">
           <MainRow />
           {row}
         </div>
-        <RowMin />
+        {minRow}
       </div>
     );
   };

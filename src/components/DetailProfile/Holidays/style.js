@@ -4,4 +4,9 @@ export const styleModal = {
     border: 'none',
   },
 };
-export const qwet = {};
+export const displayNone = {
+  display: 'none',
+};
+export const displayFlex = {
+  display: 'flex',
+};

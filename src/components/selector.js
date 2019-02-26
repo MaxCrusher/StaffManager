@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import moment from 'moment';
 
 const space = ' ';
 
@@ -15,6 +16,8 @@ export const payRates = state => state.detailProfile.payRates;
 export const getHolidayMembers = state => state.holiday.staffMemberHolidays;
 export const getHolidayType = state => state.holiday.types;
 export const getHolidayStatus = state => state.holiday.status;
+export const getTypeFilter = state => state.holiday.typeFilter;
+export const getDatesFilter = state => state.holiday.datesFilter;
 
 // export const staffTypes = (id, state) => state.profiles.profiles.staffTypes.filter(elem => elem.id === id)[0].name;
 
@@ -23,15 +26,57 @@ export const getHolidays = createSelector(
   getHolidayType,
   getHolidayStatus,
   getStaffMembers,
-  (holidays, types, stat, members) =>
-    holidays.map(hol => ({
-      ...hol,
-      user: members ? members.filter(elem => elem.id === hol.idUser)[0] : null,
-      status: stat.filter(elem => elem.id === hol.idStatus)[0],
-      statusMas: stat.map(elem => ({ ...elem, label: elem.name, value: elem.name })),
-      type: types.filter(elem => elem.id === hol.idType)[0].name,
-      typeMas: types.map(elem => ({ ...elem, label: elem.name, value: elem.name })),
-    })),
+  getTypeFilter,
+  getDatesFilter,
+  (holidays, types, stat, members, typeF, datesF) =>
+    holidays
+      .filter(
+        hol =>
+          typeF === null ||
+          (hol.idType === typeF.id &&
+            moment(hol.startDate, 'DD-MM-YYYY').diff(moment(datesF.startDate, 'DD-MM-YYYY')) >= 0 &&
+            moment(hol.startDate, 'DD-MM-YYYY').diff(moment(datesF.endDate, 'DD-MM-YYYY')) <= 0),
+      )
+      .map(hol => ({
+        ...hol,
+        user: members ? members.filter(elem => elem.id === hol.idUser)[0] : null,
+        status: stat.filter(elem => elem.id === hol.idStatus)[0],
+        type: types.filter(elem => elem.id === hol.idType)[0].name,
+      })),
+);
+
+export const filterHolidays = (type = null, dates = { startDate: '', endDate: '' }) =>
+  createSelector(
+    getHolidayMembers,
+    getHolidayType,
+    getHolidayStatus,
+    getStaffMembers,
+    (holidays, types, stat, members) =>
+      holidays
+        .filter(
+          hol =>
+            type === null || (hol.idType === type.id && hol.startDate > dates.startDate && hol.endDate < dates.endDate),
+        )
+        .map(
+          hol => (
+            console.log(hol),
+            {
+              ...hol,
+              user: members ? members.filter(elem => elem.id === hol.idUser)[0] : null,
+              status: stat.filter(elem => elem.id === hol.idStatus)[0],
+              type: types.filter(elem => elem.id === hol.idType)[0].name,
+            }
+          ),
+        ),
+  );
+
+export const getTypesAndStatus = createSelector(
+  getHolidayType,
+  getHolidayStatus,
+  (types, stat) => ({
+    typeMas: types.map(elem => ({ ...elem, label: elem.name, value: elem.name })),
+    statusMas: stat.map(elem => ({ ...elem, label: elem.name, value: elem.name })),
+  }),
 );
 
 export const getProfile = createSelector(
@@ -144,3 +189,8 @@ export const getDetailProfile = createSelector(
     mobileApp: {},
   }),
 );
+/* (
+          hol.idType === typeF.id &&
+          moment(hol.startDate, 'DD-MM-YYYY').diff(moment(datesF.startDate, 'DD-MM-YYYY')) < 0 &&
+          moment(hol.endDate, 'DD-MM-YYYY').diff(moment(datesF.endDate, 'DD-MM-YYYY') > 0)
+        ) */

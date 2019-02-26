@@ -12,4 +12,3 @@ const MainRow = () => (
   </div>
 );
 export default MainRow;
-

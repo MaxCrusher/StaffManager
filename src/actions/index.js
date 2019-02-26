@@ -118,6 +118,11 @@ export const updateHolidaysIsLoading = () => ({
   type: action.UPDATE_HOLIDAYS_IS_LOADING,
 });
 
+export const updateHolidaysA = data => ({
+  type: action.UPDATE_HOLYDAYS,
+  data,
+});
+
 export const fetchDetailProfile = id => dispatch => {
   dispatch(fetchRequestDetailProfile());
   return getDetailProfile(id)

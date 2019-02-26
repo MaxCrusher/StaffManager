@@ -47,6 +47,11 @@ const initialState = {
     { id: 2, name: 'ACCEPTED', color: '#86dd75' },
     { id: 3, name: 'REJECTED', color: '#ed7f7e' },
   ],
+  typeFilter: null,
+  datesFilter: {
+    startDate: '',
+    endDate: '',
+  },
 };
 
 export default (state = initialState, action) => {
@@ -69,10 +74,9 @@ export default (state = initialState, action) => {
     case actions.FETCH_RESOLVE_EDIT_HOLIDAY:
       return {
         ...state,
-        staffMemberHolidays: {
+        staffMemberHolidays: [
           ...state.staffMemberHolidays.map(elem => {
             if (elem.id === action.idArg) {
-              console.log(elem);
               return {
                 ...elem,
                 note: action.data.area,
@@ -81,13 +85,16 @@ export default (state = initialState, action) => {
                 idType: action.data.type.id,
               };
             }
+            return elem;
           }),
-        },
+        ],
       };
     case actions.FETCH_RESOLVE_ERROR_DELETE:
       return { ...state, errors: {} };
     case actions.UPDATE_HOLIDAYS_IS_LOADING:
       return { ...state, isLoading: !state.isLoading };
+    case actions.UPDATE_HOLYDAYS:
+      return { ...state, typeFilter: action.data.typeFilter, datesFilter: action.data.datesFilter };
     default:
       return { ...state };
   }

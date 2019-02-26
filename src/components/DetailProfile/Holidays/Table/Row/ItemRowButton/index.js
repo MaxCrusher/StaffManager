@@ -62,7 +62,6 @@ class ItemRowButton extends Component {
           label="Edit Holiday"
           isOpen={this.state.isOpenEdit}
           closeModal={this.closeModal}
-          options={this.props.holiday.typeMas}
           area={this.props.holiday.note}
           type={this.props.holiday.type}
           startDate={this.props.holiday.startDate}
