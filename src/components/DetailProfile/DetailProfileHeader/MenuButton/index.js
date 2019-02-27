@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const mas = document.getElementsByClassName('boss-button boss-button_type_small boss-page-dashboard__switch');
 class MenuButton extends Component {
   componentDidMount = () => {
-    const url = window.location.href.split('/');
+    const url = window.location.href.split(/[/?]/);
     Array.from(mas).map(elem => {
       if (elem.id === url[5]) {
         return elem.classList.add('boss-button_state_active');

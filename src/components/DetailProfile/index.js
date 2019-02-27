@@ -89,4 +89,5 @@ DetailProfile.propTypes = {
   detailProfile: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
 };
