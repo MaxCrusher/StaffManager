@@ -6,6 +6,7 @@ import Table from './Table';
 import Filter from './Filter';
 import { getHolidays, getTypesAndStatus } from '../../selector';
 import { fetchProfiles, updateHolidaysIsLoading, failFetchGetHolidays, updateHolidaysA } from '../../../actions';
+import ModalForm from './ModalForm';
 
 class Holidays extends Component {
   state = {
@@ -16,7 +17,12 @@ class Holidays extends Component {
       startDate: '',
       endDate: '',
     },
+    isOpen: false,
   };
+
+  openModal = () => this.setState({ isOpen: true });
+
+  closeModal = () => this.setState({ isOpen: false });
 
   componentDidMount = async () => {
     if (this.props.isLoading) {
@@ -55,7 +61,9 @@ class Holidays extends Component {
             <header className="boss-board__header">
               <h2 className="boss-board__title">Holidays and holiday requests</h2>
               <div className="boss-board__button-group">
-                <p className="boss-button boss-button_role_add">Add Holiday</p>
+                <p className="boss-button boss-button_role_add" onClick={this.openModal}>
+                  Add Holiday
+                </p>
               </div>
             </header>
             <div className="boss-board__main">
@@ -94,6 +102,16 @@ class Holidays extends Component {
             </div>
           </section>
         </div>
+        <ModalForm
+          name="add"
+          label="Add Holiday"
+          startDate={null}
+          endDate={null}
+          isOpen={this.state.isOpen}
+          closeModal={this.closeModal}
+          options={this.props.masTypeAndStatus}
+          idUser={this.props.idUser}
+        />
       </div>
     );
   };
@@ -101,6 +119,7 @@ class Holidays extends Component {
 
 const mapStateToProps = state => ({
   holidays: getHolidays(state),
+  idUser: state.detailProfile.staffMember.id,
   masTypeAndStatus: getTypesAndStatus(state),
   isLoading: state.holiday.isLoading,
 });

@@ -58,7 +58,7 @@ class ContactForm extends Component {
               country: this.props.contactData.country,
               county: this.props.contactData.county,
             }}
-            render={({ handleSubmit, pristine, submitErrors }) => (
+            render={({ handleSubmit, pristine }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
                 <Field
                   validate={composeValidators(validEmail)}

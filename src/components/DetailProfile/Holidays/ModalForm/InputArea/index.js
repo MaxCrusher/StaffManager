@@ -29,7 +29,7 @@ const InputArea = props => {
         <div className="boss-form__error" style={props.meta.valid ? style.dNone : style.dBlock}>
           <p className="boss-form__error-text">
             <span className="boss-form__error-line">
-              {errors() || props.meta.valid ? errors() : 'This is a required field and hav`t number!'}
+              {errors() || props.meta.valid ? errors() : 'This is a required field!'}
             </span>
           </p>
         </div>

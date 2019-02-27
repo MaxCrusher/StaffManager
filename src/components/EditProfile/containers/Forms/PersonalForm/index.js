@@ -69,7 +69,7 @@ class PersonalForm extends Component {
               gender: this.props.personalData.gender === 'male' ? options[0] : options[1],
               dateOfBirth: this.props.personalData.dateOfBirth ? moment(this.props.personalData.dateOfBirth) : null,
             }}
-            render={({ handleSubmit, pristine, submitErrors }) => (
+            render={({ handleSubmit, pristine }) => (
               <form onSubmit={handleSubmit} className="boss-form boss-form_page_profile-edit">
                 <Field
                   component={InputNames}

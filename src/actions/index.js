@@ -123,6 +123,11 @@ export const updateHolidaysA = data => ({
   data,
 });
 
+export const addHolidayA = data => ({
+  type: action.ADD_HOLIDAY,
+  data,
+});
+
 export const fetchDetailProfile = id => dispatch => {
   dispatch(fetchRequestDetailProfile());
   return getDetailProfile(id)

@@ -108,7 +108,6 @@ export const contactData = createSelector(
     postcode: member.postcode,
   }),
 );
-const reg = /\d[/]\d[/]\d /g;
 export const employmentData = createSelector(
   getStaffMember,
   getStaffTypesDP,

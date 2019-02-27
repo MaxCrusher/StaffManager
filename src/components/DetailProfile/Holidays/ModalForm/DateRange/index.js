@@ -29,4 +29,5 @@ export default DateRange;
 DateRange.propTypes = {
   input: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
 };

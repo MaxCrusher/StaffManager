@@ -69,6 +69,25 @@ export default (state = initialState, action) => {
         isLoading: action.isLoading,
       };
     }
+    case actions.ADD_HOLIDAY:
+      return {
+        ...state,
+        staffMemberHolidays: [
+          ...state.staffMemberHolidays,
+          {
+            id: state.staffMemberHolidays[state.staffMemberHolidays.length - 1].id + 1,
+            idUser: action.data.idUser,
+            idType: action.data.type.id,
+            idStatus: 1,
+            startDate: action.data.dates.startDate,
+            endDate: action.data.dates.endDate,
+            note: action.data.area,
+            payslipDate: action.data.dates.startDate,
+            createDate: action.data.createDate,
+            frozen: false,
+          },
+        ],
+      };
     case actions.FETCH_REQUEST_EDIT_HOLIDAY:
       return { ...state };
     case actions.FETCH_RESOLVE_EDIT_HOLIDAY:
