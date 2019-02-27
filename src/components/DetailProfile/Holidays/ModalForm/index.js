@@ -37,7 +37,6 @@ class ModalForm extends Component {
   };
 
   render = () => {
-    console.log(this.props.idUser);
     const required = value => !value;
     return (
       <Modal

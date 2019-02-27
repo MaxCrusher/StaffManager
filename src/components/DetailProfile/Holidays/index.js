@@ -145,4 +145,5 @@ Holidays.propTypes = {
   updateHolydays: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  idUser: PropTypes.number.isRequired,
 };

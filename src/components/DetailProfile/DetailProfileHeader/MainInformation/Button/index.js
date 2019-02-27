@@ -15,7 +15,7 @@ class Button extends Component {
       );
     }
     return (
-      <a href="#" className="boss-button boss-button_role_block boss-page-dashboard__button">
+      <a className="boss-button boss-button_role_block boss-page-dashboard__button" onClick={this.props.openModal}>
         Disable Staff Member
       </a>
     );
