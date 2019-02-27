@@ -6,7 +6,6 @@ const mas = document.getElementsByClassName('boss-button boss-button_type_small 
 class MenuButton extends Component {
   componentDidMount = () => {
     const url = window.location.href.split('/');
-    console.log(url);
     Array.from(mas).map(elem => {
       if (elem.id === url[5]) {
         return elem.classList.add('boss-button_state_active');

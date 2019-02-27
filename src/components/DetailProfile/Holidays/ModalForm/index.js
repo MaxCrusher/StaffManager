@@ -99,7 +99,7 @@ ModalForm.propTypes = {
   label: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  options: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired,
   area: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   editHoliday: PropTypes.func.isRequired,

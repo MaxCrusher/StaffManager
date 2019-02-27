@@ -57,17 +57,12 @@ export const filterHolidays = (type = null, dates = { startDate: '', endDate: ''
           hol =>
             type === null || (hol.idType === type.id && hol.startDate > dates.startDate && hol.endDate < dates.endDate),
         )
-        .map(
-          hol => (
-            console.log(hol),
-            {
-              ...hol,
-              user: members ? members.filter(elem => elem.id === hol.idUser)[0] : null,
-              status: stat.filter(elem => elem.id === hol.idStatus)[0],
-              type: types.filter(elem => elem.id === hol.idType)[0].name,
-            }
-          ),
-        ),
+        .map(hol => ({
+          ...hol,
+          user: members ? members.filter(elem => elem.id === hol.idUser)[0] : null,
+          status: stat.filter(elem => elem.id === hol.idStatus)[0],
+          type: types.filter(elem => elem.id === hol.idType)[0].name,
+        })),
   );
 
 export const getTypesAndStatus = createSelector(
@@ -189,8 +184,3 @@ export const getDetailProfile = createSelector(
     mobileApp: {},
   }),
 );
-/* (
-          hol.idType === typeF.id &&
-          moment(hol.startDate, 'DD-MM-YYYY').diff(moment(datesF.startDate, 'DD-MM-YYYY')) < 0 &&
-          moment(hol.endDate, 'DD-MM-YYYY').diff(moment(datesF.endDate, 'DD-MM-YYYY') > 0)
-        ) */

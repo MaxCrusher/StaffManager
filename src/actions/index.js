@@ -179,7 +179,6 @@ export const fetchEditContactData = (id, data) => dispatch => {
 
 export const fetchEditEmploymentData = (id, data) => dispatch => {
   dispatch(fetchRequestEditEmploymentData());
-  console.log(id, data);
   return postEmploymentInfo(id, data)
     .then(response => {
       dispatch(fetchResolveEditEmploymentData(response.data));
@@ -222,7 +221,6 @@ export const failEditHoliday = (id, data) => dispatch => {
   dispatch(fetchRequestEditHoliday(id, data));
   return fetchEditHoliday(id, data)
     .then(response => {
-      console.log(response);
       dispatch(fetchResolveEditHoliday(response.id, response.data));
       return response;
     })

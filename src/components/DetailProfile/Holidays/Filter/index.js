@@ -67,7 +67,6 @@ export class Filter extends Component {
   };
 
   render = () => {
-    console.log(this.props, this.state);
     if (this.state.load) {
       return null;
     }
@@ -142,7 +141,7 @@ export class Filter extends Component {
 
 export default Filter;
 Filter.propTypes = {
-  options: PropTypes.object.isRequired,
+  options: PropTypes.array.isRequired,
   onFilter: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };

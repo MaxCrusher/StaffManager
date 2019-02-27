@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 export class ItemRow extends Component {
   render = () => {
-    console.log('object');
     const statusP = (
       <p className="boss-table__text boss-table__text_role_pending-status" style={{ color: this.props.color }}>
         {this.props.text}
@@ -34,7 +33,7 @@ export class ItemRow extends Component {
 export default ItemRow;
 ItemRow.propTypes = {
   label: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   name: PropTypes.string,
   startDate: PropTypes.string,
   endDate: PropTypes.string,

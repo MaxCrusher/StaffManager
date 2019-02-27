@@ -10,7 +10,6 @@ import CalendarInfo from './calendar-info';
 class BossDateRangePicker extends PureComponent {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       focusedInput: null,
       startDate: oFetch(props, 'startDate') || null,

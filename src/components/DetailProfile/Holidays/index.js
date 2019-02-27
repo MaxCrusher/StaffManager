@@ -19,11 +19,10 @@ class Holidays extends Component {
   };
 
   componentDidMount = async () => {
-    console.log(this.state, this.props.holidays);
     if (this.props.isLoading) {
       this.props
         .getProfiles()
-        .then(
+        .then(response =>
           this.props
             .getHolidays()
             .then(response => this.props.updateIsLoading())
@@ -38,23 +37,10 @@ class Holidays extends Component {
   };
 
   filter = data => {
-    console.log(data);
     this.props.updateHolydays(data);
-    /* const holidaysNew = this.state.holidays.filter(
-      hol =>
-        type === null ||
-        (hol.idType === type.id &&
-          hol.startDate > data.datesFilter.startDate &&
-          hol.endDate < data.datesFilter.endDate),
-    );
-    this.setState({
-      holidays: holidaysNew,
-    });
-    // filterHolidays(data.typeFilter, data.datesFilter)(this.props); */
   };
 
   render = () => {
-    console.log(this.props);
     if (this.props.isLoading) {
       return (
         <div className="centerSpiner">

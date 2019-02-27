@@ -25,7 +25,6 @@ class RowMin extends Component {
   };
 
   render = () => {
-    console.log('object');
     return (
       <div
         className={

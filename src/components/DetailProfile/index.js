@@ -32,7 +32,6 @@ class DetailProfile extends Component {
   }
 
   render = () => {
-    console.log(this.props.match);
     let header = (
       <DetailProfileHeader
         id={this.props.detailProfile.id}
@@ -90,13 +89,4 @@ DetailProfile.propTypes = {
   detailProfile: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  id: PropTypes.number.isRequired,
 };
-/* <MainContent
-          id={this.props.detailProfile.id}
-          employmentDetail={this.props.detailProfile.employmentDetail}
-          accountDetail={this.props.detailProfile.accountDetail}
-          personalDetail={this.props.detailProfile.personalDetail}
-          contactDetail={this.props.detailProfile.contactDetail}
-          mobileApp={this.props.detailProfile.mobileApp}
-        /> */

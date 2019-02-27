@@ -6,7 +6,6 @@ import ItemRowButton from './ItemRowButton';
 
 class Row extends Component {
   render = () => {
-    console.log(this.props);
     return (
       <div className={this.props.holiday.frozen ? 'boss-table__row boss-table__row_state_frozen' : 'boss-table__row'}>
         <ItemRow label="Types" text={this.props.holiday.type} />
